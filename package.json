@@ -1,0 +1,41 @@
+{
+  "name": "nature-of-code",
+  "version": "1.0.0",
+  "description": "Nature of code project",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config ./src/webpack.config.js",
+    "start": "webpack-dev-server --inline --progress --config src/webpack.config.js --host localhost --port 8081"
+  },
+  "author": "Henrique Torquato",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^4.3.0",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^1.3.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "p5": "^1.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henriquetorquato/nature-of-code.git"
+  },
+  "keywords": [
+    "Nature",
+    "Of",
+    "Code"
+  ],
+  "bugs": {
+    "url": "https://github.com/henriquetorquato/nature-of-code/issues"
+  },
+  "homepage": "https://github.com/henriquetorquato/nature-of-code#readme"
+}
