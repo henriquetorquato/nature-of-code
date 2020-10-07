@@ -1,5 +1,6 @@
 const MAX_SPLATTER_SIZE = 2000
 const MIN_SPLATTER_SIZE = 1000
+const SPLATTER_POSITION_DEVIATION = 200
 
 export default class PaintSplatter {
 
@@ -8,7 +9,7 @@ export default class PaintSplatter {
         const splatters = []
 
         for (let i = 0; i < amount; i++) {
-            const center = this.getRandomGaussianPosition(window.center, 200)
+            const center = this.getRandomGaussianPosition(window.center, SPLATTER_POSITION_DEVIATION)
             const size = Math.randomBetween(MAX_SPLATTER_SIZE, MIN_SPLATTER_SIZE)
 
             const dots = []

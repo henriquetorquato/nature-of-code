@@ -9,8 +9,6 @@ const gameWindow = new Window(500, 500)
 
 window.setup = () => {
     gameWindow.create()
-    gameWindow.setBackroundColor(225)
-
     director.setup()
 }
 

@@ -26,8 +26,4 @@ export default class Window {
         createCanvas(this.width, this.height)
     }
 
-    setBackroundColor(color) {
-        background(color)
-    }
-
 }

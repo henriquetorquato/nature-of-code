@@ -3,7 +3,7 @@ import { getScene } from '../scenes'
 export default class Director {
 
     constructor() {
-        const sceneType = getScene('paint_splatter')
+        const sceneType = getScene('random_walker')
         this.scene = new sceneType()
     }
 
@@ -12,6 +12,8 @@ export default class Director {
     }
 
     draw() {
+        clear()
+        background(225)
         this.scene.draw()
     }
 
