@@ -9,11 +9,10 @@ export default class Director {
 
     setup() {       
         this.scene.setup()
+        background(225)
     }
 
-    draw() {
-        clear()
-        background(225)
+    draw() {       
         this.scene.draw()
     }
 

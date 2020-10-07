@@ -28,6 +28,8 @@ export default class PaintSplatter {
     }
 
     draw() {
+        clear()
+        background(225)
         noStroke()
         for (let s = 0; s < this.splatters.length; s++) {
             const splatter = this.splatters[s]
