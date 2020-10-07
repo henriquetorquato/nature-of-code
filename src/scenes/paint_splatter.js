@@ -9,7 +9,7 @@ export default class PaintSplatter {
         const splatters = []
 
         for (let i = 0; i < amount; i++) {
-            const center = this.getRandomGaussianPosition(window.center, SPLATTER_POSITION_DEVIATION)
+            const center = this.getRandomGaussianPosition(window.canvasCenter, SPLATTER_POSITION_DEVIATION)
             const size = Math.randomBetween(MAX_SPLATTER_SIZE, MIN_SPLATTER_SIZE)
 
             const dots = []

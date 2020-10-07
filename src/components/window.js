@@ -4,8 +4,10 @@ export default class Window {
         this.width = width
         this.height = height
 
-        window.center = this.center
-        window.size = this.size
+        window.canvasCenter = this.center
+        window.canvasSize = this.size
+        window.canvasWidth = this.width
+        window.canvasHeight = this.height
     }
 
     get center() {
