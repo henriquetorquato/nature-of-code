@@ -3,13 +3,13 @@ import { getScene } from '../scenes'
 export default class Director {
 
     constructor() {
-        const sceneType = getScene('random_walker')
+        const sceneType = getScene('color_noise')
         this.scene = new sceneType()
     }
 
     setup() {       
-        this.scene.setup()
         background(225)
+        this.scene.setup()
     }
 
     draw() {       
