@@ -1,8 +1,9 @@
 export default class Window {
 
-    constructor(width, height) {
+    constructor(width, height, renderer) {
         this.width = width
         this.height = height
+        this.renderer = renderer
 
         window.canvasCenter = this.center
         window.canvasSize = this.size
@@ -25,7 +26,7 @@ export default class Window {
     }
 
     create() {
-        createCanvas(this.width, this.height)
+        createCanvas(this.width, this.height, this.renderer)
     }
 
 }

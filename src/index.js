@@ -2,13 +2,15 @@ import 'p5'
 import './resources/random'
 import './index.css'
 
-import { Director, Window } from './components'
+import { Director } from './components'
 
 const director = new Director()
-const gameWindow = new Window(500, 500)
+
+window.preload = () => {
+    window.font = loadFont('./src/assets/NotCourierSans/NotCourierSans.otf')
+}
 
 window.setup = () => {
-    gameWindow.create()
     director.setup()
 }
 
