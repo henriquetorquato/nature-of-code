@@ -18,8 +18,7 @@ export default class Walker {
         // Move the ellipse
         this.position.add(direction)
 
-        this.noiseOffset.add(
-            createVector(STEP_NOISE_OFFSET, STEP_NOISE_OFFSET))
+        this.noiseOffset.add([STEP_NOISE_OFFSET, STEP_NOISE_OFFSET])
     }
 
     display() {
