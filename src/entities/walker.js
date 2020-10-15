@@ -1,39 +1,38 @@
-const STEPSIZE_NOISE_OFFSET = 0.01
+const STEP_NOISE_OFFSET = 0.01
 
 export default class Walker {
 
     constructor(x, y, shouldFollowMouse = false) {
-        this.x = x
-        this.y = y
+        this.position = createVector(x, y)
+        this.noiseOffset = createVector(0, 1000)
         this.shouldFollowMouse = shouldFollowMouse
-
-        this.noiseOffsetX = 0
-        this.noiseOffsetY = 1000
     }
 
     step() {
         const direction = this.getDirection()
-        const stepX = map(noise(this.noiseOffsetX), 0, 1, 0, 5)
-        const stepY = map(noise(this.noiseOffsetY), 0, 1, 0, 5)
+        const step = this.getStepSize()
 
-        this.x += direction.x * stepX
-        this.y += direction.y * stepY
+        // Calculate the ellipse movement
+        direction.mult(step)
 
-        this.noiseOffsetX += STEPSIZE_NOISE_OFFSET
-        this.noiseOffsetY += STEPSIZE_NOISE_OFFSET
+        // Move the ellipse
+        this.position.add(direction)
+
+        this.noiseOffset.add(
+            createVector(STEP_NOISE_OFFSET, STEP_NOISE_OFFSET))
     }
 
     display() {
         fill(255, 100, 0)
-        ellipse(this.x, this.y, 30)
+        ellipse(this.position.x, this.position.y, 30)
     }
 
     getDirection() {
         let x, y
         if (this.moveToMouse)
         {
-            x = this.x - mouseX > 0 ? -1 : 1,
-            y = this.y - mouseY > 0 ? -1 : 1
+            x = this.position.x - mouseX > 0 ? -1 : 1,
+            y = this.position.y - mouseY > 0 ? -1 : 1
         }
         else
         {
@@ -41,10 +40,13 @@ export default class Walker {
             y = Math.randomBetween(-1, 1)
         }
 
-        return {
-            x: x,
-            y: y
-        }
+        return createVector(x, y)
+    }
+
+    getStepSize() {
+        const x = map(noise(this.noiseOffset.x), 0, 1, 0, 5)
+        const y = map(noise(this.noiseOffset.y), 0, 1, 0, 5)
+        return createVector(x, y)
     }
 
     get moveToMouse() {
