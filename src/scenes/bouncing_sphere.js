@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import CircularCamera from '../entities/circular_camera'
+import RotatingCamera from '../entities/rotating_camera'
 
 const CUBE_SIZE = 100
 const SPHERE_RADIUS = 10
@@ -36,7 +36,7 @@ export default class BouncingSphere {
     setup() {
         this.cube = this.buildCubeStructure()
         this.center = createVector(CUBE_SIZE / 2, CUBE_SIZE / 2, CUBE_SIZE / 2)
-        this.camera = new CircularCamera(this.center, CUBE_SIZE + CAMERA_DISTANCE, CAMERA_STEP)
+        this.camera = new RotatingCamera(this.center, CUBE_SIZE + CAMERA_DISTANCE, CAMERA_STEP)
 
         this.position = createVector(this.center.x, this.center.y, this.center.z)
         this.direction = Vector.random3D()
@@ -79,7 +79,7 @@ export default class BouncingSphere {
     }
 
     drawSphere() {
-        fill(0)
+        fill(255)
         translate(this.position.x, this.position.y, this.position.z)
         sphere(SPHERE_RADIUS, 10, 10)
     }

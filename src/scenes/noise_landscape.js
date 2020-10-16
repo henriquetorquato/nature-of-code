@@ -1,4 +1,4 @@
-import CircularCamera from '../entities/circular_camera'
+import RotatingCamera from '../entities/rotating_camera'
 
 const LANDSCAPE_PANNEL_WIDTH = 50
 const LANDSCAPE_PANNEL_HEIGHT = 50
@@ -18,9 +18,9 @@ export default class NoiseLandscape {
 
         const center = createVector(
             (LANDSCAPE_WIDTH * LANDSCAPE_PANNEL_WIDTH) / 2,
-            (LANDSCAPE_HEIGHT * LANDSCAPE_PANNEL_HEIGHT) / 2)
+            (LANDSCAPE_HEIGHT * LANDSCAPE_PANNEL_HEIGHT) / 2, 200)
 
-        this.camera = new CircularCamera(center, CAMERA_DISTANCE, CAMERA_STEP)
+        this.camera = new RotatingCamera(center, CAMERA_DISTANCE, CAMERA_STEP)
     }
 
     draw() {
