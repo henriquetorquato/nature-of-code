@@ -3,13 +3,15 @@ import PaintSplatter from './paint_splatter'
 import ColorNoise from './color_noise'
 import NoiseLanscape from './noise_landscape'
 import BouncingSphere from './bouncing_sphere'
+import CarAcceleration from './car_acceleration'
 
 const scenes = {
     'random_walker': RandomWalker,
     'paint_splatter': PaintSplatter,
     'color_noise': ColorNoise,
     'noise_landscape': NoiseLanscape,
-    'bouncing_sphere': BouncingSphere
+    'bouncing_sphere': BouncingSphere,
+    'car_acceleration': CarAcceleration
 }
 
 const getScene = (key) => {
