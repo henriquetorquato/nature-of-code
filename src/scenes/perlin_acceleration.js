@@ -1,4 +1,4 @@
-import Walker from '../entities/walker'
+import Ball from '../entities/ball'
 
 const OFFSET_STEP = 0.01
 const BALL_SIZE = 20
@@ -46,20 +46,6 @@ export default class PerlinAcceleration {
         {
             this.ball.position.y = 0
         }
-    }
-
-}
-
-class Ball extends Walker {
-
-    constructor(position, size) {
-        super()
-        this.position = position
-        this.size = size
-    }
-
-    display() {
-        ellipse(this.position.x, this.position.y, this.size)
     }
 
 }
