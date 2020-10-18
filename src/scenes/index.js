@@ -4,6 +4,7 @@ import ColorNoise from './color_noise'
 import NoiseLanscape from './noise_landscape'
 import BouncingSphere from './bouncing_sphere'
 import CarAcceleration from './car_acceleration'
+import PerlinAcceleration from './perlin_acceleration'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -11,7 +12,8 @@ const scenes = {
     'color_noise': ColorNoise,
     'noise_landscape': NoiseLanscape,
     'bouncing_sphere': BouncingSphere,
-    'car_acceleration': CarAcceleration
+    'car_acceleration': CarAcceleration,
+    'perlin_acceleration': PerlinAcceleration
 }
 
 const getScene = (key) => {

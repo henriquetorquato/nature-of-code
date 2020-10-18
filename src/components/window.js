@@ -5,17 +5,10 @@ export default class Window {
         this.height = height
         this.renderer = renderer
 
-        window.canvasCenter = this.center
+        window.canvasCenter = createVector(this.width / 2, this.height / 2)
         window.canvasSize = this.size
         window.canvasWidth = this.width
         window.canvasHeight = this.height
-    }
-
-    get center() {
-        return {
-            x: this.width / 2,
-            y: this.height / 2
-        }
     }
 
     get size() {

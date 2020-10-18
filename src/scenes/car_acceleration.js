@@ -7,8 +7,7 @@ const CAR_HEIGHT = 20
 export default class CarAcceleration {
 
     setup() {
-        this.car = new Car(
-            createVector(window.canvasCenter.x, window.canvasCenter.y))
+        this.car = new Car(window.canvasCenter)
 
         textFont(window.font);
         textSize(20);
