@@ -4,21 +4,29 @@ export default class Walker {
         this.position = position
         this.velocity = createVector(0, 0, 0)
         this.acceleration = createVector(0, 0, 0)
-        this.limit = null
+
+        this.velocityLimit = null
+        this.canvasBorder = null
     }
 
     update() {
+        // Apply acceleration vector
         this.velocity.add(this.acceleration)
 
-        if (this.limit !== null) {
-            this.velocity.limit(this.limit)
+        // Limit velocity vector
+        if (this.velocityLimit !== null) {
+            this.velocity.limit(this.velocityLimit)
         }
 
-        this.position.add(this.velocity)
-    }
+        // Check for borders using abstracted behaviour
+        if (this.canvasBorder !== null) {
+            const { position, velocity } = this.canvasBorder.check(this.position, this.velocity)
+            this.position = position
+            this.velocity = velocity
+        }
 
-    set velocityLimit(value) {
-        this.limit = value
+        // Apply velocity vector
+        this.position.add(this.velocity)
     }
 
 }

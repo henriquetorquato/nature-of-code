@@ -1,37 +1,49 @@
 import { Vector } from 'p5'
 import Ball from '../entities/ball'
+import { BouncingBorder } from '../entities/border'
 
 const BALL_SIZE = 20
-const GRAVITATIONAL_FORCE = 1
+const GRAVITY_FORCE = 9.8
+const GRAVITY_DECAY = 0.02
 
 export default class GravitationalAcceleration {
 
     setup() {
         this.ball = new Ball(window.canvasCenter, BALL_SIZE)
-        this.ball.velocityLimit = 10
+        this.ball.velocityLimit = 5
+        this.ball.canvasBorder = new BouncingBorder()
+
+        this.longestDistance = Math.sqrt(Math.pow(window.canvasWidth, 2) + Math.pow(window.canvasHeight, 2))
+
+        textFont(window.font);
+        textSize(20);
     }
 
     draw() {
         clear()
         background(220)
         
-        this.ball.acceleration = this.getPullVector()
+        this.ball.acceleration = this.accelerationVector()
 
         this.ball.update()
         this.ball.display()
     }
 
-    getPullVector() {
+    accelerationVector() {
         const mouse = createVector(mouseX, mouseY)
+        const distance = Vector.sub(mouse, this.ball.position)
 
-        const direction = Vector.sub(mouse, this.ball.position)
-        direction.normalize()
+        const force = this.forceExponentialDecay(distance.mag())
+        text(`Gravitational Pull: ${force}`, 10, 20)
 
-        // const force = createVector(
-        //     this.ball.position.x / (window.canvasWidth / 2),
-        //     this.ball.position.y / (window.canvasHeight / 2))
+        // This is now a direction vector
+        distance.normalize()
 
-        return Vector.mult(direction, 0.5)
+        return Vector.mult(distance, force)
+    }
+
+    forceExponentialDecay(value) {
+        return GRAVITY_FORCE * Math.pow(1 - GRAVITY_DECAY, value)
     }
 
 }
