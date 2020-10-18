@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import Ball from '../entities/ball'
+import Walker from '../entities/walker'
 import { BouncingBorder } from '../entities/border'
 
 const BALL_SIZE = 20
@@ -44,6 +44,20 @@ export default class GravitationalAcceleration {
 
     forceExponentialDecay(value) {
         return GRAVITY_FORCE * Math.pow(1 - GRAVITY_DECAY, value)
+    }
+
+}
+
+class Ball extends Walker {
+
+    constructor(position, size) {
+        super()
+        this.position = position
+        this.size = size
+    }
+
+    display() {
+        ellipse(this.position.x, this.position.y, this.size)
     }
 
 }
