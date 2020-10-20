@@ -1,15 +1,13 @@
 import { Vector } from 'p5'
-import PixelAnimation from '../../resources/pixel_animation'
 
 const NOISE_STEP = 1
 const MAX_DISTANCE = 5
 
 export default class NervousFly {
 
-    constructor() {
-        this.position = window.canvasCenter
-        this.noiseOffset = createVector(0, 1000)
-        this.animation = new PixelAnimation(NervousFlyFrames)
+    constructor(position) {
+        this.position = position
+        this.noiseOffset = this.randomOffset()
     }
 
     update() {
@@ -18,9 +16,9 @@ export default class NervousFly {
     }
 
     display() {
-        const frame = this.animation.next()
-        imageMode(CENTER)
-        image(frame, this.position.x, this.position.y, 5, 5)
+        noStroke()
+        fill(0)
+        ellipse(this.position.x, this.position.y, 2)
     }
 
     nextMovement() {
@@ -36,17 +34,17 @@ export default class NervousFly {
         return Vector.mult(direction, distance)
     }
 
-}
+    randomPosition() {
+        return createVector(
+            Math.randomBetween(0, window.canvasWidth),
+            Math.randomBetween(0, window.canvasHeight))
+    }
 
-const NervousFlyFrames = [
-    [
-        [1, 0, 1],
-        [0, 1, 0],
-        [0, 0, 0]
-    ],
-    [
-        [0, 0, 0],
-        [0, 1, 0],
-        [1, 0, 1]
-    ]
-]
+    randomOffset() {
+        const max = Math.randomBetween(0, 10000)
+        return createVector(
+            Math.randomBetween(0, max),
+            Math.randomBetween(max, max + 1000))
+    }
+
+}
