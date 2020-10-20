@@ -1,5 +1,5 @@
 import 'p5'
-import './resources/random'
+import './resources'
 import './index.css'
 
 import { Director } from './components'

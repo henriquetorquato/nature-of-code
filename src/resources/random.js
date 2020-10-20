@@ -9,3 +9,10 @@ Math.randomColor = () => {
         b: Math.randomBetween(0, 255)
     }
 }
+
+Math.randomOffset = () => {
+    const max = Math.randomBetween(0, 10000)
+    return createVector(
+        Math.randomBetween(0, max),
+        Math.randomBetween(max, max + 1000))
+}

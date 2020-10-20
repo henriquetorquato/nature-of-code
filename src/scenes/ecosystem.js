@@ -1,4 +1,5 @@
 import NervousFly from '../entities/creatures/nervous_fly'
+import SlitheringSnake from '../entities/creatures/slithering_snake'
 
 export default class Ecosystem {
 
@@ -6,6 +7,7 @@ export default class Ecosystem {
 
     setup() {
         this.initialize(NervousFly, 5)
+        this.initialize(SlitheringSnake, 1)
     }
 
     draw() {
