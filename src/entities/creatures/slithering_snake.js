@@ -3,6 +3,7 @@ import { BouncingBorder } from '../border'
 
 const MAX_VELOCITY = 1
 const ACCELERATION_SCALE = 2
+const SLITHERING_RATE = 0.1
 
 export default class SlitheringSnake {
 
@@ -18,11 +19,12 @@ export default class SlitheringSnake {
         this.directionOffset = Math.randomOffset()
 
         this.bounds = new BouncingBorder()
+        this.slitheringX = 0
     }
     
     update() {
         this.direction = this.randomDirection()
-        this.acceleration = Vector.mult(this.direction, ACCELERATION_SCALE)
+        this.acceleration = this.accelerationVector()
 
         this.velocity.add(this.acceleration)
         this.velocity.limit(MAX_VELOCITY)
@@ -33,7 +35,7 @@ export default class SlitheringSnake {
         this.position.add(this.velocity)
     }
 
-    display() {
+    display() {    
         push()
         noStroke()
         fill(20, 80, 60)
@@ -49,9 +51,36 @@ export default class SlitheringSnake {
         this.directionOffset.add(0.01)
 
         return createVector(
-            map(noise(this.directionOffset.x), 0, 1, -5, 5),
-            map(noise(this.directionOffset.y), 0, 1, -5, 5)
+            map(noise(this.directionOffset.x), 0, 1, -1, 1),
+            map(noise(this.directionOffset.y), 0, 1, -1, 1)
         ).normalize()
+    }
+
+    slitheringVector() {
+        const y = Math.sin(this.slitheringX)
+        this.slitheringX += SLITHERING_RATE
+        return createVector(0, y)
+    }
+
+    /*
+    * The idea of calculation the acceleration this way, is to merge a side 
+    * movement that is defined by a sin wave (simulating a snake slithering),
+    * considering the general direction that the snake is moving.
+    */
+    accelerationVector() {
+        angleMode(DEGREES)
+
+        const slithering = this.slitheringVector()
+        // Make the side movement relative to the direction the snake is going
+        slithering.rotate(this.direction.heading())
+        
+        // Scale the direction vector
+        const direction = Vector.mult(this.direction, ACCELERATION_SCALE)
+
+        const acceleration = Vector.cross(direction, slithering)
+        acceleration.rotate(this.direction.heading() + direction.angleBetween(slithering) / 2)
+
+        return acceleration
     }
 
 }

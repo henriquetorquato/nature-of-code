@@ -9,8 +9,8 @@ export default class CarAcceleration {
     setup() {
         this.car = new Car(window.canvasCenter)
 
-        textFont(window.font);
-        textSize(20);
+        textFont(window.font)
+        textSize(20)
     }
 
     draw() {

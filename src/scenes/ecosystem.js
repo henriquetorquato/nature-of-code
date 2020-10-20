@@ -6,7 +6,7 @@ export default class Ecosystem {
     entities = []
 
     setup() {
-        this.initialize(NervousFly, 5)
+        // this.initialize(NervousFly, 5)
         this.initialize(SlitheringSnake, 1)
     }
 
