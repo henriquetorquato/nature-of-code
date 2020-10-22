@@ -37,7 +37,7 @@ export class TeleportingBorder {
 
 /*
     When the walker goes beyond the border,
-    the velocity vector is mult by -1, giving a border bounce effect
+    the velocity vector is mult by -1, giving a border bounce effect.
 */
 export class BouncingBorder {
 

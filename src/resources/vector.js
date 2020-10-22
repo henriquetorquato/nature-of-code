@@ -1,8 +1,8 @@
 import { Vector } from 'p5'
 
-// Vector.copy = (vector) => {
-//     return new Vector(vector.x, vector.y, vector.z)
-// }
+Vector.copy = (vector) => {
+    return new Vector(vector.x, vector.y, vector.z)
+}
 
 // Source: https://p5js.org/reference/#/p5.Vector/angleBetween
 Vector.drawArrow = (base, vec, myColor) => {
