@@ -1,13 +1,15 @@
 import NervousFly from '../entities/creatures/nervous_fly'
 import SlitheringSnake from '../entities/creatures/slithering_snake'
+import SwimmingFish from '../entities/creatures/swimming_fish'
 
 export default class Ecosystem {
 
     entities = []
 
     setup() {
-        // this.initialize(NervousFly, 5)
-        this.initialize(SlitheringSnake, 1)
+        this.spawn(NervousFly, 10)
+        this.spawn(SlitheringSnake, 3)
+        this.spawn(SwimmingFish, 5)
     }
 
     draw() {
@@ -27,7 +29,7 @@ export default class Ecosystem {
             Math.randomBetween(0, window.canvasHeight))
     }
 
-    initialize(type, amount) {
+    spawn(type, amount) {
         for (let i = 0; i < amount; i++) {
             const position = this.randomPosition()
             const entity = new type(position)

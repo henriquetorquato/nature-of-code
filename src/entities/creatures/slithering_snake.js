@@ -1,40 +1,27 @@
 import { Vector } from 'p5'
+import CreatureMovement from './creature_movement'
 
 const MAX_VELOCITY = 1
 const ACCELERATION_SCALE = 2
-const SLITHERING_RATE = 0.1
 const MIN_BORDER_DISTANCE = 80
 
-export default class SlitheringSnake {
+export default class SlitheringSnake extends CreatureMovement {
 
     constructor(position) {
+        super(MIN_BORDER_DISTANCE)
         this.genes = new SlitheringSnakeGenes()
 
-        // Basic information for the moving object
+        // Basic information for moving the object
         this.position = position
         this.velocity = createVector(0, 0)
         this.acceleration = createVector(0, 0)
 
-        // The direction determined by the perlin noise
         this.direction = createVector(0, 0)
-        this.directionOffset = Math.randomOffset()
-
-        // The 'flip' values to maintain the snake inside the canvas
-        this.flip = createVector(1, 1)
 
         // The x value used by the slithering movement (sin wave)
-        this.slitheringX = 0
+        this.slitheringX = Math.randomBetween(0, 10000)
     }
     
-    update() {
-        this.direction = this.nextDirection()
-        this.acceleration = this.accelerationVector()
-
-        this.velocity.add(this.acceleration)
-        this.velocity.limit(MAX_VELOCITY)
-        this.position.add(this.velocity)
-    }
-
     display() {    
         push()
         noStroke()
@@ -47,16 +34,13 @@ export default class SlitheringSnake {
         pop()
     }
 
-    nextDirection() {
-        this.directionOffset.add(0.01)       
+    update() {
+        this.direction = this.nextDirection()
+        this.acceleration = this.accelerationVector()
 
-        const direction = createVector(
-            map(noise(this.directionOffset.x), 0, 1, -1, 1),
-            map(noise(this.directionOffset.y), 0, 1, -1, 1))
-            .normalize()
-
-        this.flip = this.flipVector()
-        return Vector.mult(direction, this.flip)
+        this.velocity.add(this.acceleration)
+        this.velocity.limit(MAX_VELOCITY)
+        this.position.add(this.velocity)
     }
 
     /*
@@ -73,44 +57,21 @@ export default class SlitheringSnake {
         
         // Scale the direction vector
         const direction = Vector.mult(this.direction, ACCELERATION_SCALE)
-
         const acceleration = Vector.cross(direction, slithering)
         acceleration.rotate(this.direction.heading() + direction.angleBetween(slithering) / 2)
 
         return acceleration
     }
 
+    /*
+    * The slithering movement is produced by a vector generated based on a
+    * sin wave. This vector is then merged with the direction, making the 
+    * final acceleration vector produce a side to side movement.
+    */
     slitheringVector() {
         const y = Math.sin(this.slitheringX)
-        this.slitheringX += SLITHERING_RATE
+        this.slitheringX += this.genes.slitheringRate
         return createVector(0, y)
-    }
-
-    flipVector() {
-        const flip = Vector.copy(this.flip)
-
-        // Vector representing the distance to the 4 sides of the border
-        const top = Vector.sub(createVector(this.position.x, 0), this.position)
-        const left = Vector.sub(createVector(0, this.position.y), this.position)
-        const bottom = Vector.sub(createVector(this.position.x, window.canvasHeight), this.position)
-        const right = Vector.sub(createVector(window.canvasWidth, this.position.y), this.position)
-
-        if (this.checkFlipDimention(left) || this.checkFlipDimention(right))
-        {
-            flip.x *= -1
-        }
-
-        if (this.checkFlipDimention(top) || this.checkFlipDimention(bottom))
-        {
-            flip.y *= -1
-        }
-
-        return flip
-    }
-
-    checkFlipDimention(vector) {
-        const angle = Math.abs(this.direction.angleBetween(vector))
-        return vector.mag() < MIN_BORDER_DISTANCE && angle < 90
     }
 
 }
@@ -119,7 +80,7 @@ const WIDTH_MEAN = 3
 const WIDTH_DEVIATION = 1
 const HEIGHT_MEAN = 60
 const HEIGHT_DEVIATION = 15
-const COLOR_DEVIATION = 40
+const COLOR_DEVIATION = 30
 
 class SlitheringSnakeGenes {
 
@@ -127,9 +88,10 @@ class SlitheringSnakeGenes {
         this.width = randomGaussian(WIDTH_MEAN, WIDTH_DEVIATION)
         this.height = randomGaussian(HEIGHT_MEAN, HEIGHT_DEVIATION)
         this.color = color(
-            randomGaussian(40, COLOR_DEVIATION),
+            randomGaussian(60, COLOR_DEVIATION),
             randomGaussian(80, COLOR_DEVIATION),
-            randomGaussian(60, COLOR_DEVIATION))
+            randomGaussian(20, COLOR_DEVIATION))
+        this.slitheringRate = Math.random()
     }
 
 }
