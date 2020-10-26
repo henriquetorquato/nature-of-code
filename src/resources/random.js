@@ -16,3 +16,9 @@ Math.randomOffset = () => {
         Math.randomBetween(0, max),
         Math.randomBetween(max, max + 1000))
 }
+
+Math.randomPosition = () => {
+    return createVector(
+        Math.randomBetween(0, window.canvasWidth),
+        Math.randomBetween(0, window.canvasHeight))
+}
