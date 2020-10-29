@@ -1,9 +1,8 @@
 import { Vector } from 'p5'
 
 const SIZE = 20
-const BORDER_FORCE = 10
+const BORDER_FORCE = 20
 const BORDER_FORCE_DECAY = 0.08
-const MIN_BORDER_DISTANCE = 40
 
 export default class BouncingBall {
 
@@ -14,10 +13,9 @@ export default class BouncingBall {
 
         this.position = Vector.copy(window.canvasCenter)
         this.velocity = createVector(0, 0)
-        this.acceleration = createVector(0, 0)
 
-        this.border = new BorderForce(MIN_BORDER_DISTANCE)
-        this.acceleration = Vector.random2D()
+        // Create a random initial acceleration
+        this.acceleration = Vector.mult(Vector.random2D(), 5)
     }
 
     draw() {
@@ -28,14 +26,11 @@ export default class BouncingBall {
     }
 
     update() {
-        const borderForces = this.border.forces(this.position)
+        const borderForces = this.checkBounds()
         this.acceleration.add(borderForces)
 
         this.velocity.add(this.acceleration)
         this.velocity.limit(10)
-
-        const bounce = this.bounceVector()
-        this.velocity.mult(bounce)
 
         this.position.add(this.velocity)
         this.acceleration.mult(0)
@@ -43,6 +38,7 @@ export default class BouncingBall {
 
     display() {
         push()
+        Vector.drawArrow(this.position, Vector.mult(this.velocity, 10), 'red')
         ellipse(this.position.x, this.position.y, this.size)
         pop()
     }
@@ -52,56 +48,20 @@ export default class BouncingBall {
         this.acceleration.add(newForce)
     }
 
-    bounceVector() {
-        let bounce = createVector(1, 1)
-        const nextPosition = Vector.add(this.position, this.velocity)
-
-        if (nextPosition.x - this.radius < 0 || nextPosition.x + this.radius > window.canvasWidth)
-        {
-            bounce.x = -1
-        }
-
-        if (nextPosition.y - this.radius < 0 || nextPosition.y + this.radius > window.canvasHeight)
-        {
-            bounce.y = -1
-        }
-
-        return bounce
-    }
-
-}
-
-class BorderForce {
-
-    constructor(minDistance) {
-        this.minDistance = minDistance
-    }
-
-    forces(position) {
+    checkBounds() {
         const acceleration = createVector(0, 0)
 
-        const top = Vector.sub(createVector(position.x, 0), position)
-        const left = Vector.sub(createVector(0, position.y), position)
-        const bottom = Vector.sub(createVector(position.x, window.canvasHeight), position)
-        const right = Vector.sub(createVector(window.canvasWidth, position.y), position)    
+        // Vectors representing distance to each canvas side
+        const top = Vector.sub(createVector(this.position.x, 0), this.position)
+        const left = Vector.sub(createVector(0, this.position.y), this.position)
+        const bottom = Vector.sub(createVector(this.position.x, window.canvasHeight), this.position)
+        const right = Vector.sub(createVector(window.canvasWidth, this.position.y), this.position)
 
-        if (this.shouldApply(top))
-        {
-            acceleration.y -= this.forceFunction(top)
-        }
-        else if (this.shouldApply(bottom))
-        {
-            acceleration.y += this.forceFunction(bottom)
-        }
-
-        if (this.shouldApply(left))
-        {
-            acceleration.x -= this.forceFunction(left)
-        }
-        else if (this.shouldApply(right))
-        {
-            acceleration.x += this.forceFunction(right)
-        }
+        // Apply the influence of every force to the body
+        acceleration.y += this.forceFunction(top)
+        acceleration.y -= this.forceFunction(bottom)
+        acceleration.x += this.forceFunction(left)
+        acceleration.x -= this.forceFunction(right)
 
         return acceleration
     }
@@ -109,10 +69,6 @@ class BorderForce {
     // force * (1 - decay)^distance
     forceFunction(distanceVector) {
         return BORDER_FORCE * Math.pow(1 - BORDER_FORCE_DECAY, distanceVector.mag())
-    }
-
-    shouldApply(vector) {
-        return vector.mag() <= this.minDistance
     }
 
 }
