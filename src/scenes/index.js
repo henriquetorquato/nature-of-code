@@ -8,6 +8,7 @@ import PerlinAcceleration from './perlin_acceleration'
 import GravitationalAcceleration from './gravitational_acceleration'
 import Ecosystem from './ecosystem'
 import HeliumBalloon from './helium_balloon'
+import BouncingBall from './bouncing_ball'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -19,7 +20,8 @@ const scenes = {
     'perlin_acceleration': PerlinAcceleration,
     'gravitational_acceleration': GravitationalAcceleration,
     'ecosystem': Ecosystem,
-    'helium_balloon': HeliumBalloon
+    'helium_balloon': HeliumBalloon,
+    'bouncing_ball': BouncingBall
 }
 
 const getScene = (key) => {

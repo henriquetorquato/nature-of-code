@@ -1,6 +1,9 @@
+import { Vector } from 'p5'
+
 export default class Walker {
 
-    constructor(position = createVector(0, 0, 0)) {
+    constructor(position = createVector(0, 0, 0), mass = 1) {
+        this.mass = mass
         this.position = position
         this.velocity = createVector(0, 0, 0)
         this.acceleration = createVector(0, 0, 0)
@@ -27,6 +30,14 @@ export default class Walker {
 
         // Apply velocity vector
         this.position.add(this.velocity)
+
+        // Reset acceleration
+        this.acceleration.mult(0)
+    }
+
+    applyForce(force) {
+        let newForce = Vector.div(force, this.mass)
+        this.acceleration.add(newForce)
     }
 
 }
