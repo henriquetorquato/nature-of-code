@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import { BouncingBorder } from '../border'
+import { BouncingBorder } from '../../resources/border'
 
 const NOISE_STEP = 1
 const MAX_ACCELERATION = 5

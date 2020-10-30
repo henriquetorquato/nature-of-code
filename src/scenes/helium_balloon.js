@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import { BouncingBorder } from '../entities/border'
+import { BouncingBorder } from '../resources/border'
 
 const SIZE = 20
 const MAX_VELOCITY = 3

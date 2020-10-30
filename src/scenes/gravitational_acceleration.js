@@ -1,6 +1,6 @@
 import { Vector } from 'p5'
 import Walker from '../entities/walker'
-import { BouncingBorder } from '../entities/border'
+import { BouncingBorder } from '../resources/border'
 
 const BALL_SIZE = 20
 const GRAVITY_FORCE = 9.8
