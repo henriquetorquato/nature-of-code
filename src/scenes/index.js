@@ -9,6 +9,7 @@ import GravitationalAcceleration from './gravitational_acceleration'
 import Ecosystem from './ecosystem'
 import HeliumBalloon from './helium_balloon'
 import BouncingBall from './bouncing_ball'
+import PortalGels from './portal_gels'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -21,7 +22,8 @@ const scenes = {
     'gravitational_acceleration': GravitationalAcceleration,
     'ecosystem': Ecosystem,
     'helium_balloon': HeliumBalloon,
-    'bouncing_ball': BouncingBall
+    'bouncing_ball': BouncingBall,
+    'portal_gels': PortalGels
 }
 
 const getScene = (key) => {
