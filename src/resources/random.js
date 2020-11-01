@@ -11,10 +11,11 @@ Math.randomColor = () => {
 }
 
 Math.randomOffset = () => {
-    const max = Math.randomBetween(0, 10000)
+    const baseline = Math.randomBetween(0, 10000)
     return createVector(
-        Math.randomBetween(0, max),
-        Math.randomBetween(max, max + 1000))
+        Math.randomBetween(0, baseline),
+        Math.randomBetween(baseline, baseline + 1000),
+        Math.randomBetween(baseline + 2000, baseline + 3000))
 }
 
 Math.randomPosition = () => {
