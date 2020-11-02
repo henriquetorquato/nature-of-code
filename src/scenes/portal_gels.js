@@ -2,6 +2,7 @@ import { Vector } from 'p5'
 import Walker from '../entities/walker'
 import { BouncingCircleBorder } from '../resources/border'
 import { BlueGel, OrangeGel } from '../entities/gels'
+import Rect from '../resources/rect'
 
 const BALL_SIZE = 20
 const BLUE_GEL_MEAN_AMOUNT = 3
@@ -25,7 +26,7 @@ export default class PortalGels {
 
         this.gels.forEach(gel =>
         {
-            if (gel.collides(this.ball)) {
+            if (Rect.intersects(gel.rect, this.ball.rect)) {
                 const gelForce = gel.force(this.ball.velocity)
                 this.ball.applyForce(gelForce)
             }
@@ -61,6 +62,12 @@ class Ball extends Walker {
 
         this.velocity = Vector.mult(Vector.random2D(), 10)
         this.canvasBorder = new BouncingCircleBorder(this.radius)
+    }
+
+    get rect() {
+        const x = this.position.x - this.diameter / 2
+        const y = this.position.y - this.diameter / 2
+        return Rect.from(createVector(x, y), this.diameter)
     }
 
     display() {
