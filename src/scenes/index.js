@@ -11,6 +11,7 @@ import HeliumBalloon from './helium_balloon'
 import BouncingBall from './bouncing_ball'
 import PortalGels from './portal_gels'
 import FluidDrag from './fluid_drag'
+import LiftDrag from './lift_drag'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -25,7 +26,8 @@ const scenes = {
     'helium_balloon': HeliumBalloon,
     'bouncing_ball': BouncingBall,
     'portal_gels': PortalGels,
-    'fluid_drag': FluidDrag
+    'fluid_drag': FluidDrag,
+    'lift_drag': LiftDrag
 }
 
 const getScene = (key) => {

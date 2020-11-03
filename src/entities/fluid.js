@@ -17,7 +17,10 @@ export default class Fluid {
     display() {
         push()
         noStroke()
-        fill(this.color)
+        if (this.color != null)
+        {
+            fill(this.color)
+        }
         rect(this.position.x, this.position.y, this.size.width, this.size.height)
         pop()
     }
