@@ -26,6 +26,12 @@ export default class Rect {
         return new this(position.x, position.y, size.width, size.height)
     }
 
+    static fromCircle(position, size) {
+        const x = position.x - size / 2
+        const y = position.y - size / 2
+        return new this(x, y, size, size)
+    }
+
     static intersects(rect1, rect2) {
         // https://math.stackexchange.com/questions/99565/simplest-way-to-calculate-the-intersect-area-of-two-rectangles
         const x_overlap = Math.max(0, Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left));

@@ -2,7 +2,6 @@ import Walker from '../entities/walker'
 import Fluid from '../entities/fluid'
 import { BouncingSquareBorder } from '../resources/border'
 import Rect from '../resources/rect'
-import { Vector } from 'p5'
 
 export default class FluidDrag {
 
