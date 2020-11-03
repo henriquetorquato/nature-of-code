@@ -14,17 +14,17 @@ export default class FluidDrag {
         }
 
         const waterColor = color(137, 191, 237, 100)
-        const coeficient = 1
+        const coeficient = 0.15
 
         this.water = new Fluid(waterPosition, size, waterColor, coeficient)
 
         this.boxes = [
             new Box(createVector(100, 0), 20),
-            new Box(createVector(250, 250), 20),
-            new Box(createVector(400, 350), 20)
+            new Box(createVector(200, 0), 40),
+            new Box(createVector(300, 0), 60)
         ]        
 
-        this.gravity = createVector(0, 0.1)
+        this.gravity = createVector(0, 0.98)
     }
 
     draw() {
@@ -33,11 +33,10 @@ export default class FluidDrag {
 
         this.boxes.forEach(box =>
         {
-            const gravity = Vector.mult(this.gravity, box.mass)
-            box.applyForce(gravity)
+            box.applyForce(this.gravity)
 
             if (Rect.intersects(box.rect, this.water.rect)) {
-                const drag = this.water.drag(box.velocity)
+                const drag = this.water.drag(box.velocity, box.size.width)
                 box.applyForce(drag)
             }
 

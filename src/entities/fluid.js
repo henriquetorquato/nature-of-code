@@ -22,9 +22,9 @@ export default class Fluid {
         pop()
     }
 
-    drag(velocity) {
+    drag(velocity, area = 1) {
         const speed = velocity.mag()
-        const dragMag = this.dragCoeficient * Math.pow(speed, 2)
+        const dragMag = area * this.dragCoeficient * Math.pow(speed, 2)
         const drag = Vector.copy(velocity)
         drag.mult(-1)
         drag.normalize()
