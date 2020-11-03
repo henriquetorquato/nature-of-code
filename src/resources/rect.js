@@ -23,7 +23,7 @@ export default class Rect {
     }
 
     static from(position, size) {
-        return new this(position.x, position.y, size, size)
+        return new this(position.x, position.y, size.width, size.height)
     }
 
     static intersects(rect1, rect2) {

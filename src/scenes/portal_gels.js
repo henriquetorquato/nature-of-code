@@ -67,7 +67,7 @@ class Ball extends Walker {
     get rect() {
         const x = this.position.x - this.diameter / 2
         const y = this.position.y - this.diameter / 2
-        return Rect.from(createVector(x, y), this.diameter)
+        return Rect.from(createVector(x, y), { width: this.diameter, height: this.diameter })
     }
 
     display() {

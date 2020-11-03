@@ -6,7 +6,7 @@ export default class Gel {
         this.position = position
         this.color = color
         this.size = size
-        this.rect = Rect.from(position, size)
+        this.rect = Rect.from(position, { width: size, height: size })
     }
 
     display() {
