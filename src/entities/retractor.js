@@ -1,6 +1,6 @@
 import { Vector } from 'p5'
 
-export default class Attractor {
+export default class Retractor {
 
     constructor(position, size, mass, gravity, minDistance, maxDistance) {
         this.position = position
@@ -9,17 +9,17 @@ export default class Attractor {
         this.gravity = gravity
         this.minDistance = minDistance
         this.maxDistance = maxDistance
-        this.color = color(66, 133, 244)
+        this.color = color(201, 63, 63)
     }
 
     force(position, mass) {
-        const attraction = Vector.sub(this.position, position)
-        const distance = constrain(attraction.mag(), this.minDistance, this.maxDistance)
-        const mag = (this.gravity * this.mass * mass) / Math.pow(distance, 2)
+        const retraction = Vector.sub(this.position, position)
+        const distance = constrain(retraction.mag(), this.minDistance, this.maxDistance)
+        const mag = (this.gravity * this.mass * mass) * Math.pow(distance, 2)
 
-        attraction.normalize()
-        attraction.setMag(mag)
-        return attraction
+        retraction.normalize()
+        retraction.setMag(mag)
+        return retraction
     }
 
     display() {

@@ -1,36 +1,58 @@
-import { Vector } from 'p5'
 import Walker from '../entities/walker'
 import Attractor from '../entities/attractor'
 
 const MIN_DISTANCE = 5
 const MAX_DISTANCE = 50
+
 const PARTICLE_AMOUNT = 20
 const PARTICLE_SIZE_MEAN = 5
 const PARTICLE_SIZE_DEVIATION = 2
 
+const ATTRACTOR_AMOUNT = 10
+const ATTRACTOR_MIN_SIZE = 20
+const ATTRACTOR_MAX_SIZE = 60
+
 export default class AttractorDesign {
 
     setup() {
-        const center = Vector.copy(window.canvasCenter)
-        this.attractor = new Attractor(center, 40, 40, 0.4, MIN_DISTANCE, MAX_DISTANCE)
-
-        this.particles = []
-        for (let i = 0; i < PARTICLE_AMOUNT; i++) {
-            this.particles.push(this.createParticle(this.attractor))
+        this.attractors = []
+        for (let i = 0; i < ATTRACTOR_AMOUNT; i++)
+        {
+            this.attractors.push(this.createAttractor())
         }
 
-        background(80)
+        this.particles = []
+        for (let i = 0; i < PARTICLE_AMOUNT; i++)
+        {
+            const index = Math.randomBetween(0, this.attractors.length - 1)
+            const particle = this.createParticle(this.attractors[index])
+            this.particles.push(particle)
+        }
     }
 
     draw() {
+        clear()
+        background(80)
+
         this.particles.forEach(particle =>
         {
-            const attraction = this.attractor.force(particle.position, particle.mass)
-            particle.applyForce(attraction)
+            this.attractors.forEach(attractor =>
+            {
+                const attraction = attractor.force(particle.position, particle.mass)
+                particle.applyForce(attraction)
+            })
 
             particle.update()
             particle.display()
         })
+    }
+
+    createAttractor() {
+        const position = Math.randomPosition()
+        const size = Math.randomBetween(ATTRACTOR_MIN_SIZE, ATTRACTOR_MAX_SIZE)
+        const gravity = Math.random()
+
+        return new Attractor(position, size, size, gravity, MIN_DISTANCE, MAX_DISTANCE)
     }
 
     createParticle(attractor) {
