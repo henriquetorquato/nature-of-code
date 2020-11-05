@@ -12,6 +12,7 @@ import BouncingBall from './bouncing_ball'
 import PortalGels from './portal_gels'
 import FluidDrag from './fluid_drag'
 import LiftDrag from './lift_drag'
+import AttractorDesign from './attractor_design'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -27,7 +28,8 @@ const scenes = {
     'bouncing_ball': BouncingBall,
     'portal_gels': PortalGels,
     'fluid_drag': FluidDrag,
-    'lift_drag': LiftDrag
+    'lift_drag': LiftDrag,
+    'attractor_design': AttractorDesign
 }
 
 const getScene = (key) => {
