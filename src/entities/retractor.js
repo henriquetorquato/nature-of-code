@@ -15,7 +15,7 @@ export default class Retractor {
     force(position, mass) {
         const retraction = Vector.sub(this.position, position)
         const distance = constrain(retraction.mag(), this.minDistance, this.maxDistance)
-        const mag = (this.gravity * this.mass * mass) * Math.pow(distance, 2)
+        const mag = (this.gravity * this.mass * mass) / Math.pow(distance, 2)
 
         retraction.normalize()
         retraction.setMag(mag)

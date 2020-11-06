@@ -13,6 +13,7 @@ import PortalGels from './portal_gels'
 import FluidDrag from './fluid_drag'
 import LiftDrag from './lift_drag'
 import AttractorDesign from './attractor_design'
+import MouseAttraction from './mouse_attraction'
 
 const scenes = {
     'random_walker': RandomWalker,
@@ -29,7 +30,8 @@ const scenes = {
     'portal_gels': PortalGels,
     'fluid_drag': FluidDrag,
     'lift_drag': LiftDrag,
-    'attractor_design': AttractorDesign
+    'attractor_design': AttractorDesign,
+    'mouse_attraction': MouseAttraction
 }
 
 const getScene = (key) => {
