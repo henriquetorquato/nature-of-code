@@ -1,36 +1,39 @@
-import NervousFly from '../entities/creatures/nervous_fly'
-import SlitheringSnake from '../entities/creatures/slithering_snake'
-import SwimmingFish from '../entities/creatures/swimming_fish'
-import JumpingFrog from '../entities/creatures/jumping_frog'
+// import NervousFly from '../entities/creatures/nervous_fly'
+// import SlitheringSnake from '../entities/creatures/slithering_snake'
+// import JumpingFrog from '../entities/creatures/jumping_frog'
+
+import { BigFish, SmallFish } from '../entities/creatures/fish'
 
 export default class Ecosystem {
 
-    airEntities = []
-    waterEntities = []    
+    entities = []    
 
     setup() {
-        this.spawn(NervousFly, this.airEntities, 10)
-        this.spawn(SlitheringSnake, this.waterEntities, 3)
-        this.spawn(SwimmingFish, this.waterEntities, 5)
-
-        this.lilypads = new Lilypads()
-        this.lilypads.setup()
-
-        this.frog = new JumpingFrog(this.lilypads.positions)
+        this.spawn(BigFish, this.entities, 5)
+        this.spawn(SmallFish, this.entities, 5)
     }
 
     draw() {
         clear()
-        background(220)
+        background(255)
 
-        this.drawEntities(this.waterEntities)
+        this.entities.forEach(entity =>
+        {
+            if (entity.checkTarget)
+            {
+                for (let i = 0; i < this.entities.length; i++)
+                {
+                    const target = this.entities[i]
+                    entity.checkTarget(target)
+                }
+            }
+
+            entity.update()
+            entity.display()
+        })
+
+        // TO-DO: Add drag force to water entities
         this.drawWater()
-        this.lilypads.draw()
-
-        this.frog.update()
-        this.frog.display()
-        
-        this.drawEntities(this.airEntities)
     }
 
     drawWater() {
@@ -41,64 +44,71 @@ export default class Ecosystem {
         pop()
     }
 
-    drawEntities(entities) {
-        if (entities === []) return;
-
-        for (let i = 0; i < entities.length; i++) {
-            const entity = entities[i]
-            entity.update()
-            entity.display()
-        }
-    }
-
     spawn(type, entities, amount) {
         for (let i = 0; i < amount; i++) {
             const position = Math.randomPosition()
             const entity = new type(position)
+
+            if (entity.onKill) entity.onKill(this.entityKilled.bind(this))
             entities.push(entity)
         }
     }
 
-}
+    entityKilled(target) {
+        const index = this.entities.indexOf(target)
 
-class Lilypads {
+        /*
+        * If any fish also had the killed as target,
+        * then forget about it.
+        */
+        this.entities.forEach(entity =>
+        {
+            if (entity.target === target) entity.target = null
+        })
 
-    lilypads = []
-
-    get positions() {
-        return this.lilypads.map(l => l.position)   
-    }
-
-    setup() {
-        const amount = Math.randomBetween(4, 8)
-
-        for (let i = 0; i < amount; i++) {
-            const lilypad = {
-                size : randomGaussian(20, 3),
-                position: Math.randomPosition(),
-                color: color(
-                    randomGaussian(20, 10),
-                    randomGaussian(180, 40),
-                    randomGaussian(30, 10)
-                )
-            }
-
-            this.lilypads.push(lilypad)
-        }
-    }
-
-    draw() {
-        push()
-        rectMode(CENTER)
-        for (let i = 0; i < this.lilypads.length; i++) {
-            this.drawLily(this.lilypads[i])    
-        }
-        pop()
-    }
-
-    drawLily(lily) {
-        fill(lily.color)
-        ellipse(lily.position.x, lily.position.y, lily.size)
+        this.entities.splice(index, 1)
     }
 
 }
+
+// class Lilypads {
+
+//     lilypads = []
+
+//     get positions() {
+//         return this.lilypads.map(l => l.position)   
+//     }
+
+//     setup() {
+//         const amount = Math.randomBetween(4, 8)
+
+//         for (let i = 0; i < amount; i++) {
+//             const lilypad = {
+//                 size : randomGaussian(20, 3),
+//                 position: Math.randomPosition(),
+//                 color: color(
+//                     randomGaussian(20, 10),
+//                     randomGaussian(180, 40),
+//                     randomGaussian(30, 10)
+//                 )
+//             }
+
+//             this.lilypads.push(lilypad)
+//         }
+//     }
+
+//     draw() {
+//         push()
+//         rectMode(CENTER)
+//         for (let i = 0; i < this.lilypads.length; i++) {
+//             this.drawLily(this.lilypads[i])    
+//         }
+//         pop()
+//     }
+
+//     drawLily(lily) {
+//         fill(lily.color)
+//         ellipse(lily.position.x, lily.position.y, lily.size)
+//     }
+
+// }

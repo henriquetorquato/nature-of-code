@@ -1,13 +1,14 @@
-import CreatureMovement from './creature_movement'
+import Rect from '../../../resources/rect'
+import CreatureMovement from '../creature_movement'
 
 const MIN_BORDER_DISTANCE = 20
 
 export default class SwimmingFish extends CreatureMovement {
 
-    constructor(position) {
+    constructor(position, genes) {
         super(MIN_BORDER_DISTANCE)
-        this.genes = new SwimmingFishGenes()
 
+        this.genes = genes
         this.position = position
         this.velocity = createVector(0, 0)
         this.acceleration = createVector(0, 0)
@@ -15,6 +16,10 @@ export default class SwimmingFish extends CreatureMovement {
 
         this.angle = 90
         this.swimmingY = Math.randomBetween(0, 10000)
+    }
+
+    get rect() {
+        return Rect.from(this.position, this.genes.size)
     }
 
     display() {
@@ -26,7 +31,7 @@ export default class SwimmingFish extends CreatureMovement {
         rectMode(CENTER)
         // Direction angle + Swimming Motion angle + 90 degrees for rotating the shape
         rotate(this.direction.heading() + this.angle + 90)
-        rect(0, 0, this.genes.width, this.genes.height)
+        rect(0, 0, this.genes.size.width, this.genes.size.height)
         pop()        
     }
 
@@ -59,27 +64,6 @@ export default class SwimmingFish extends CreatureMovement {
 
         acceleration.rotate(this.angle)
         return acceleration
-    }
-
-}
-
-const WIDTH_MEAN = 10
-const WIDTH_DEVIATION = 1
-const HEIGHT_MEAN = 20
-const HEIGHT_DEVIATION = 2
-const COLOR_DEVIATION = 20
-
-class SwimmingFishGenes {
-
-    constructor() {
-        this.width = randomGaussian(WIDTH_MEAN, WIDTH_DEVIATION)
-        this.height = randomGaussian(HEIGHT_MEAN, HEIGHT_DEVIATION)
-        this.color = color(
-            randomGaussian(60, COLOR_DEVIATION),
-            randomGaussian(20, COLOR_DEVIATION),
-            randomGaussian(80, COLOR_DEVIATION))
-        this.maxVelocity = Math.randomBetween(0.5, 1)
-        this.swimmingScale = Math.random()
     }
 
 }
