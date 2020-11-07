@@ -1,3 +1,4 @@
+import { Vector } from 'p5'
 import Rect from '../../../resources/rect'
 import CreatureMovement from '../creature_movement'
 
@@ -16,6 +17,9 @@ export default class SwimmingFish extends CreatureMovement {
 
         this.angle = 90
         this.swimmingY = Math.randomBetween(0, 10000)
+
+        this.area = this.genes.size.width * this.genes.size.height
+        this.mass = this.area / 2
     }
 
     get rect() {
@@ -44,6 +48,13 @@ export default class SwimmingFish extends CreatureMovement {
         this.velocity.add(this.acceleration)
         this.velocity.limit(this.genes.maxVelocity)
         this.position.add(this.velocity)
+
+        this.acceleration.mult(0)
+    }
+
+    applyForce(force) {
+        let newForce = Vector.div(force, this.mass)
+        this.acceleration.add(newForce)
     }
 
     swimmingVector() {
@@ -63,7 +74,7 @@ export default class SwimmingFish extends CreatureMovement {
         this.angle = swimming.x < 0 ? -swimmingAngle : swimmingAngle
 
         acceleration.rotate(this.angle)
-        return acceleration
+        return Vector.add(this.acceleration, acceleration)
     }
 
 }

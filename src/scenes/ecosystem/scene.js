@@ -2,15 +2,24 @@
 // import SlitheringSnake from '../entities/creatures/slithering_snake'
 // import JumpingFrog from '../entities/creatures/jumping_frog'
 
-import { BigFish, SmallFish } from '../entities/creatures/fish'
+import Water from './water'
+import RandomSpawner from '../../entities/random_spawner'
+import { BigFish, SmallFish } from '../../entities/creatures/fish'
 
 export default class Ecosystem {
 
     entities = []    
 
     setup() {
+        this.water = new Water()
+        this.spawner = new RandomSpawner(0.4, 5000)
         this.spawn(BigFish, this.entities, 5)
-        this.spawn(SmallFish, this.entities, 5)
+
+        this.spawner.start(() =>
+        {
+            this.spawn(SmallFish, this.entities, 1)
+            console.log('Spawned an small fish')
+        })
     }
 
     draw() {
@@ -28,20 +37,14 @@ export default class Ecosystem {
                 }
             }
 
+            const drag = this.water.drag(entity.velocity, entity.area)
+            entity.applyForce(drag)
+
             entity.update()
             entity.display()
         })
-
-        // TO-DO: Add drag force to water entities
-        this.drawWater()
-    }
-
-    drawWater() {
-        push()
-        noStroke()
-        fill(color(0, 126, 255, 102))
-        rect(0, 0, window.canvasWidth, window.canvasHeight)
-        pop()
+        
+        this.water.display()
     }
 
     spawn(type, entities, amount) {

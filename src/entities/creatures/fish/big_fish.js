@@ -1,9 +1,10 @@
-import { Vector } from 'p5'
-import { FishGenes, FishType } from './fish_genes'
 import Rect from '../../../resources/rect'
 import SwimmingFish from './swimming_fish'
+import { Vector } from 'p5'
+import { FishGenes, FishType } from './fish_genes'
 
-const MAX_DISTANCE = 200
+const TARGET_MIN_DISTANCE = 80
+const TARGET_MAX_DISTANCE = 300
 
 export default class BigFish extends SwimmingFish {
 
@@ -11,6 +12,22 @@ export default class BigFish extends SwimmingFish {
         super(position, new FishGenes(BaseGenes))
         this.type = FishType.Predator
         this.target = null
+    }
+
+    update() {
+        if (this.target && this.targetDistance() > TARGET_MAX_DISTANCE)
+        {
+            this.target = null
+        }
+
+        // If touching the target, kill him
+        if (this.target && Rect.intersects(this.rect, this.target.rect))
+        {
+            this.target.kill()
+            this.target = null
+        }
+
+        super.update()
     }
 
     nextDirection() {
@@ -43,19 +60,16 @@ export default class BigFish extends SwimmingFish {
         const direction = Vector.sub(this.position, target.position)
         const distance = direction.mag()
 
-        // If target is too far, ignore it
-        if (distance > MAX_DISTANCE) return
-
-        // If touching the target, kill it
-        if (Rect.intersects(this.rect, target.rect))
+        // If there is no target, and is close
+        if (this.target === null && distance < TARGET_MIN_DISTANCE)
         {
-            target.kill()
-            this.target = null
-            return
+            this.target = target
         }
+    }
 
-        // Go to the target
-        this.target = target
+    targetDistance() {
+        const direction = Vector.sub(this.position, this.target.position)
+        return direction.mag()
     }
 
 }
