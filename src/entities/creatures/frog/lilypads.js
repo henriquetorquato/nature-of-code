@@ -1,3 +1,6 @@
+const LILYPAD_CHANCE = 0.5
+const MIN_DISTANCE = 100
+
 export default class Lilypads {
 
     lilypads = []
@@ -7,35 +10,55 @@ export default class Lilypads {
     }
 
     setup() {
-        const amount = Math.randomBetween(4, 8)
+        const size = { ...window.canvasSize }
 
-        for (let i = 0; i < amount; i++) {
-            const lilypad = {
-                size : randomGaussian(20, 3),
-                position: Math.randomPosition(),
-                color: color(
+        for (let x = 0; x < size.width; x += MIN_DISTANCE)
+        {
+            for (let y = 0; y < size.height; y += MIN_DISTANCE)
+            {
+                if (Math.random() > LILYPAD_CHANCE)
+                {
+                    continue     
+                }
+
+                const size = randomGaussian(30, 3)
+
+                const position = createVector(
+                    Math.randomBetween(x, x + MIN_DISTANCE),
+                    Math.randomBetween(y, y + MIN_DISTANCE))
+
+                const lilyColor = color(
                     randomGaussian(20, 10),
-                    randomGaussian(180, 40),
+                    randomGaussian(180, 20),
                     randomGaussian(30, 10)
                 )
-            }
 
-            this.lilypads.push(lilypad)
+                const strokeColor = color(
+                    lilyColor.levels[0] - 50,
+                    lilyColor.levels[1] - 50,
+                    lilyColor.levels[2] - 50
+                )
+
+                this.lilypads.push({
+                    position: position,
+                    size : size,
+                    color: lilyColor,
+                    stroke: strokeColor
+                })
+            }
         }
     }
 
     draw() {
         push()
         rectMode(CENTER)
-        for (let i = 0; i < this.lilypads.length; i++) {
-            this.drawLily(this.lilypads[i])    
-        }
+        this.lilypads.forEach(lilypad =>
+        {
+            stroke(lilypad.stroke)
+            fill(lilypad.color)
+            ellipse(lilypad.position.x, lilypad.position.y, lilypad.size)
+        })
         pop()
-    }
-
-    drawLily(lily) {
-        fill(lily.color)
-        ellipse(lily.position.x, lily.position.y, lily.size)
     }
 
 }

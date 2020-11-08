@@ -13,6 +13,10 @@ export default class Ecosystem {
 
     setup() {
         this.water = new Water()
+
+        this.lilypads = new Lilypads()
+        this.lilypads.setup()
+
         this.spawner = new RandomSpawner(0.4, 5000)
         this.spawn(BigFish, this.entities, 5)
 
@@ -46,6 +50,7 @@ export default class Ecosystem {
         })
         
         this.water.display()
+        this.lilypads.draw()
     }
 
     spawn(type, entities, amount) {
