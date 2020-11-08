@@ -21,29 +21,17 @@ export default class Lilypads {
                     continue     
                 }
 
-                const size = randomGaussian(30, 3)
-
                 const position = createVector(
                     Math.randomBetween(x, x + MIN_DISTANCE),
                     Math.randomBetween(y, y + MIN_DISTANCE))
 
-                const lilyColor = color(
-                    randomGaussian(20, 10),
-                    randomGaussian(180, 20),
-                    randomGaussian(30, 10)
-                )
-
-                const strokeColor = color(
-                    lilyColor.levels[0] - 50,
-                    lilyColor.levels[1] - 50,
-                    lilyColor.levels[2] - 50
-                )
+                const { lilyColor, strokeColor } = this.generateColors()
 
                 this.lilypads.push({
-                    position: position,
-                    size : size,
                     color: lilyColor,
-                    stroke: strokeColor
+                    stroke: strokeColor,
+                    position: position,
+                    size : randomGaussian(30, 3)
                 })
             }
         }
@@ -59,6 +47,25 @@ export default class Lilypads {
             ellipse(lilypad.position.x, lilypad.position.y, lilypad.size)
         })
         pop()
+    }
+
+    generateColors() {
+        const lilyColor = color(
+            randomGaussian(20, 10),
+            randomGaussian(180, 20),
+            randomGaussian(30, 10)
+        )
+
+        const strokeColor = color(
+            lilyColor.levels[0] - 50,
+            lilyColor.levels[1] - 50,
+            lilyColor.levels[2] - 50
+        )
+
+        return {
+            lilyColor,
+            strokeColor
+        }
     }
 
 }
