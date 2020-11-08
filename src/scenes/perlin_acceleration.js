@@ -1,4 +1,4 @@
-import Walker from '../entities/walker'
+import Walker from '@entities/walker'
 
 const OFFSET_STEP = 0.01
 const BALL_SIZE = 20

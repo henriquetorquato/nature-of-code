@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import RotatingCamera from '../entities/rotating_camera'
+import RotatingCamera from '@entities/rotating_camera'
 
 const CUBE_SIZE = 100
 const SPHERE_RADIUS = 10

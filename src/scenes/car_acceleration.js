@@ -1,4 +1,4 @@
-import Walker from '../entities/walker'
+import Walker from '@entities/walker'
 
 const ACCELERATION_STEP = 0.001
 const CAR_WIDTH = 10

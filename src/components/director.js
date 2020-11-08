@@ -1,4 +1,4 @@
-import { getScene } from '../scenes'
+import { getScene } from '@scenes'
 import Window from './window'
 
 export default class Director {

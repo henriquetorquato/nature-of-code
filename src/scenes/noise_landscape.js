@@ -1,4 +1,4 @@
-import RotatingCamera from '../entities/rotating_camera'
+import RotatingCamera from '@entities/rotating_camera'
 
 const LANDSCAPE_PANNEL_WIDTH = 50
 const LANDSCAPE_PANNEL_HEIGHT = 50

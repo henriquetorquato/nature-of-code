@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -23,6 +23,15 @@ module.exports = {
 				use: ['style-loader', 'css-loader'],
 			},
 		]
+	},
+	resolve: {
+		alias: {
+			'@assets': path.resolve(__dirname, 'assets/'),
+			'@components': path.resolve(__dirname, 'components/'),
+			'@entities': path.resolve(__dirname, 'entities/'),
+			'@resources': path.resolve(__dirname, 'resources/'),
+			'@scenes': path.resolve(__dirname, 'scenes/')
+		}
 	},
 	plugins: [
 		new HtmlWebpackPlugin({template: './src/index.html'})

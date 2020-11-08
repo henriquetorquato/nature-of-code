@@ -1,4 +1,4 @@
-import EventManager from '../../../resources/event'
+import EventManager from '@resources/event'
 import SwimmingFish from './swimming_fish'
 import { FishGenes, FishType } from './fish_genes'
 

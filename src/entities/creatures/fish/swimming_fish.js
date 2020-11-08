@@ -1,5 +1,5 @@
 import { Vector } from 'p5'
-import Rect from '../../../resources/rect'
+import Rect from '@resources/rect'
 import CreatureMovement from '../creature_movement'
 
 const MIN_BORDER_DISTANCE = 20

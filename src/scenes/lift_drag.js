@@ -1,7 +1,7 @@
 import { Vector } from 'p5'
-import Fluid from '../entities/fluid'
-import Walker from '../entities/walker'
-import Rect from '../resources/rect'
+import Fluid from '@entities/fluid'
+import Walker from '@entities/walker'
+import Rect from '@resources/rect'
 
 export default class LiftDrag {
 

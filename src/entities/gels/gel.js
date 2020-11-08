@@ -1,4 +1,4 @@
-import Rect from '../../resources/rect'
+import Rect from '@resources/rect'
 
 export default class Gel {
 

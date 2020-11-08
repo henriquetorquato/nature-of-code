@@ -1,7 +1,7 @@
-import Walker from '../entities/walker'
-import Fluid from '../entities/fluid'
-import { BouncingSquareBorder } from '../resources/border'
-import Rect from '../resources/rect'
+import Walker from '@entities/walker'
+import Fluid from '@entities/fluid'
+import { BouncingSquareBorder } from '@resources/border'
+import Rect from '@resources/rect'
 
 export default class FluidDrag {
 

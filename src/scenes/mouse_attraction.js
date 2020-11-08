@@ -1,6 +1,6 @@
 import { Vector } from 'p5'
-import Walker from '../entities/walker'
-import Attractor from '../entities/attractor'
+import Walker from '@entities/walker'
+import Attractor from '@entities/attractor'
 
 const PARTICLE_AMOUNT = 30
 const MIN_DISTANCE = 20

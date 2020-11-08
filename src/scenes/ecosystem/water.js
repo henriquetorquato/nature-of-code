@@ -1,4 +1,4 @@
-import Fluid from '../../entities/fluid'
+import Fluid from '@entities/fluid'
 
 export default class Water extends Fluid {
 

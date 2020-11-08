@@ -1,6 +1,6 @@
-import Rect from '../../../resources/rect'
-import SwimmingFish from './swimming_fish'
 import { Vector } from 'p5'
+import Rect from '@resources/rect'
+import SwimmingFish from './swimming_fish'
 import { FishGenes, FishType } from './fish_genes'
 
 const TARGET_MIN_DISTANCE = 80

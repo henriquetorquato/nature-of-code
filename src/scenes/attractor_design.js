@@ -1,5 +1,5 @@
-import Walker from '../entities/walker'
-import Attractor from '../entities/attractor'
+import Walker from '@entities/walker'
+import Attractor from '@entities/attractor'
 
 const MIN_DISTANCE = 5
 const MAX_DISTANCE = 50

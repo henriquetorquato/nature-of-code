@@ -1,8 +1,8 @@
 import { Vector } from 'p5'
-import Walker from '../entities/walker'
-import { BouncingCircleBorder } from '../resources/border'
-import { BlueGel, OrangeGel } from '../entities/gels'
-import Rect from '../resources/rect'
+import Walker from '@entities/walker'
+import { BouncingCircleBorder } from '@resources/border'
+import { BlueGel, OrangeGel } from '@entities/gels'
+import Rect from '@resources/rect'
 
 const BALL_SIZE = 20
 const BLUE_GEL_MEAN_AMOUNT = 3
