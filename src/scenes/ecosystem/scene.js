@@ -2,9 +2,9 @@
 // import SlitheringSnake from '@entities/creatures/slithering_snake'
 // import JumpingFrog from '@entities/creatures/jumping_frog'
 
-import Water from './water'
 import RandomSpawner from '@entities/random_spawner'
-import { JumpingFrog, Lilypads } from '@entities/creatures/frog'
+import { Air, Water } from './fluids'
+import { JumpingFrog, generateLilypads } from '@entities/creatures/frog'
 import { BigFish, SmallFish } from '@entities/creatures/fish'
 
 export default class Ecosystem {
@@ -12,26 +12,29 @@ export default class Ecosystem {
     entities = []    
 
     setup() {
-        // Fishes
+        this.air = new Air()
         this.water = new Water()
-        this.spawner = new RandomSpawner(0.4, 5000)
-        this.spawn(BigFish, this.entities, 5)
 
-        this.spawner.start(() =>
+        // Fishes
+        this.spawner = new RandomSpawner(0.4, 5000, () =>
         {
             this.spawn(SmallFish, this.entities, 1)
             console.log('Spawned an small fish')
         })
 
+        this.spawn(BigFish, this.entities, 5)
+        this.spawn(SmallFish, this.entities, 10)
+
         // Frog
-        this.lilypads = new Lilypads()
-        this.lilypads.setup()
-        this.frog = new JumpingFrog(this.lilypads.positions)
+        this.lilypads = generateLilypads()
+        this.frog = new JumpingFrog(this.lilypads)
     }
 
     draw() {
         clear()
         background(255)
+
+        this.spawner.check()
 
         this.entities.forEach(entity =>
         {
@@ -52,7 +55,10 @@ export default class Ecosystem {
         })
         
         this.water.display()
-        this.lilypads.draw()
+        this.lilypads.forEach(lilypad => lilypad.display())
+
+        const drag = this.air.drag(this.frog.velocity, this.frog.area)
+        this.frog.applyForce(drag)
 
         this.frog.update()
         this.frog.display()

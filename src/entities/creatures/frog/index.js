@@ -1,7 +1,8 @@
+import { Lilypad, generateLilypads } from './lilypad'
 import JumpingFrog from './jumping_frog'
-import Lilypads from './lilypads'
 
 export {
     JumpingFrog,
-    Lilypads
+    Lilypad,
+    generateLilypads
 }

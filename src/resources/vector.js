@@ -18,3 +18,29 @@ Vector.drawArrow = (base, vec, myColor) => {
     triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
     pop();
 }
+
+/*
+* p5's `.normalize()` makes a fractioned vector,
+* this implementation should fix this problem.
+*/
+Vector.normalize = (vector) => {
+    if (vector.x < 0)
+    {
+        vector.x = -1
+    }
+    else if (vector.x > 0)
+    {
+        vector.x = 1
+    }
+
+    if (vector.y < 0)
+    {
+        vector.y = -1
+    }
+    else if (vector.y > 0)
+    {
+        vector.y = 1
+    }
+
+    return vector
+}
