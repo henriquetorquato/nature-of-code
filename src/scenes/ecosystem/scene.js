@@ -12,11 +12,8 @@ export default class Ecosystem {
     entities = []    
 
     setup() {
+        // Fishes
         this.water = new Water()
-
-        this.lilypads = new Lilypads()
-        this.lilypads.setup()
-
         this.spawner = new RandomSpawner(0.4, 5000)
         this.spawn(BigFish, this.entities, 5)
 
@@ -25,6 +22,11 @@ export default class Ecosystem {
             this.spawn(SmallFish, this.entities, 1)
             console.log('Spawned an small fish')
         })
+
+        // Frog
+        this.lilypads = new Lilypads()
+        this.lilypads.setup()
+        this.frog = new JumpingFrog(this.lilypads.positions)
     }
 
     draw() {
@@ -51,6 +53,9 @@ export default class Ecosystem {
         
         this.water.display()
         this.lilypads.draw()
+
+        this.frog.update()
+        this.frog.display()
     }
 
     spawn(type, entities, amount) {
