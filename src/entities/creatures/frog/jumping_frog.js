@@ -7,7 +7,7 @@ const WAIT_DEVIATION = 3000
 const POSITION_LOCK_DISTANCE = 5
 
 const TONG_WIDTH = 5
-const MAX_TONG_LENGTH = 80
+const MAX_TONG_LENGTH = 50
 
 export default class JumpingFrog {
 

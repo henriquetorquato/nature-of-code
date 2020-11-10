@@ -10,14 +10,14 @@ export default class Ecosystem {
     flies = []
 
     setup() {
+        // Fluids
         this.air = new Air()
         this.water = new Water()
 
         // Fishes
-        this.spawner = new RandomSpawner(0.4, 5000, () =>
+        this.fishSpawner = new RandomSpawner(0.4, 5000, () =>
         {
             this.spawn(SmallFish, 1, this.fishes, this.fishKilled.bind(this))
-            console.log('Spawned an small fish')
         })
 
         this.spawn(BigFish, 5, this.fishes, this.fishKilled.bind(this))
@@ -28,6 +28,11 @@ export default class Ecosystem {
         this.frog = new JumpingFrog(this.lilypads)
 
         // Flies
+        this.flySpawner = new RandomSpawner(0.1, 5000, () =>
+        {
+            this.spawn(NervousFly, 1, this.flies, this.flyKilled.bind(this))
+        })
+
         this.spawn(NervousFly, 10, this.flies, this.flyKilled.bind(this))
     }
 
@@ -35,7 +40,7 @@ export default class Ecosystem {
         clear()
         background(255)
 
-        this.spawner.check()
+        this.fishSpawner.check()
 
         this.fishes.forEach(entity =>
         {
