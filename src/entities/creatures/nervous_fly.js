@@ -1,9 +1,11 @@
 import { Vector } from 'p5'
 import { BouncingBorder } from '@resources/border'
+import EventManager from '@resources/event'
 
 const NOISE_STEP = 1
 const MAX_ACCELERATION = 5
 const MAX_VELOCITY = 5
+const DEATH_EVENT = 'NervousFly:Death'
 
 export default class NervousFly {
 
@@ -14,6 +16,7 @@ export default class NervousFly {
         this.noiseOffset = Math.randomOffset()
 
         this.border = new BouncingBorder()
+        this.event = new EventManager()
     }
 
     update() {
@@ -47,6 +50,14 @@ export default class NervousFly {
 
         this.noiseOffset.add(NOISE_STEP)
         return Vector.mult(direction, force)
+    }
+
+    kill() {
+        this.event.publish(DEATH_EVENT, this)
+    }
+
+    onKill(callback) {
+        this.event.subscribe(DEATH_EVENT, callback)
     }
 
 }

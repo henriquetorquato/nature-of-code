@@ -1,11 +1,19 @@
 import { Vector } from 'p5'
+import Sort from '@resources/sort'
 
 const SIZE = 20
 const WAIT_MEAN = 10000
 const WAIT_DEVIATION = 3000
 const POSITION_LOCK_DISTANCE = 5
 
+const TONG_WIDTH = 5
+const MAX_TONG_LENGTH = 80
+
 export default class JumpingFrog {
+
+    fly = null
+    tong = null
+    jump = null
 
     position = undefined
     currentLilypad = undefined
@@ -18,8 +26,6 @@ export default class JumpingFrog {
         this.lilypad = this.nextLilypad()
         this.acceleration = createVector(0, 0)
         this.velocity = createVector(0, 0)
-
-        this.jump = null
         this.wait = this.nextWait()
     }
 
@@ -32,18 +38,28 @@ export default class JumpingFrog {
         this.currentLilypad = value
     }
 
-    // TO-DO: Use a jump function to 
     update() {
-        if (this.jump === null)
+        // Wait random timeout
+        if (Date.now() < this.wait)
         {
-            if (Date.now() < this.wait)
-            {
-                return
-            }
-            else
-            {
-                this.jump = this.nextLilypad()
-            }
+            return
+        }
+
+        // If a fly is close, catch it
+        if (this.fly && this.jump === null)
+        {
+            this.tong = Vector.sub(this.fly.position, this.position)
+            this.fly.kill()
+            this.fly = null
+
+            this.wait = this.nextWait()
+            return
+        }
+
+        // Make next jump
+        if (this.fly === null && this.jump === null)
+        {
+            this.jump = this.nextLilypad()
         }
 
         const direction = Vector.sub(this.jump.position, this.position)
@@ -74,9 +90,26 @@ export default class JumpingFrog {
     }
 
     display() {
+        if (this.tong)
+        {
+            // Angle between down and the tond direction
+            const angle = createVector(0, 1).angleBetween(this.tong)
+
+            push()
+            noStroke()
+            fill(200, 100, 110)
+            translate(this.position.x, this.position.y)
+            rotate(angle)
+            rect(0, 0, TONG_WIDTH, this.tong.mag())
+            pop()
+
+            this.tong = null
+        }
+
         push()
+        noStroke()
         rectMode(CENTER)
-        fill(0)
+        fill(40, 100, 30)
         ellipse(this.position.x, this.position.y, SIZE)
         pop()
     }
@@ -88,25 +121,8 @@ export default class JumpingFrog {
             return this.lilypads[index]
         }
         
-        const sortedPositions = this.lilypads.sort((a, b) =>
-        {
-            const distanceA = Vector.sub(this.position, a.position)
-            const distanceB = Vector.sub(this.position, b.position)
+        const sortedPositions = Sort.byDistance(this.position, this.lilypads)
 
-            if (distanceA.mag() < distanceB.mag())
-            {
-                return -1
-            }
-            else if (distanceA.mag() > distanceB.mag())
-            {
-                return 1
-            }
-            else
-            {
-                return 0
-            }
-        })
-        
         // Index 0 is the current
         const index = Math.randomBetween(2, 4)
         return sortedPositions[index]
@@ -116,6 +132,21 @@ export default class JumpingFrog {
         const now = Date.now()
         const timeout = randomGaussian(WAIT_MEAN, WAIT_DEVIATION)
         return now + timeout
+    }
+
+    checkFlies(flies) {
+        if (Date.now() < this.wait) return
+
+        const sortedFlies = Sort.byDistance(this.position, flies)
+        const nearest = sortedFlies[0]
+
+        const direction = Vector.sub(nearest.position, this.position)
+        const distance = direction.mag()
+
+        if (distance <= MAX_TONG_LENGTH)
+        {
+            this.fly = nearest
+        }
     }
 
 }
