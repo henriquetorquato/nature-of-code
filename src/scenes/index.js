@@ -20,6 +20,9 @@ import LiftDrag from './chapter_2_forces/lift_drag'
 import AttractorDesign from './chapter_2_forces/attractor_design'
 import MouseAttraction from './chapter_2_forces/mouse_attraction'
 
+// Chapter 3: Oscillation
+import RotatingBaton from './chapter_3_oscillation/rotating_baton'
+
 const scenes = {
     'ecosystem': Ecosystem,
     'random_walker': RandomWalker,
@@ -36,7 +39,8 @@ const scenes = {
     'fluid_drag': FluidDrag,
     'lift_drag': LiftDrag,
     'attractor_design': AttractorDesign,
-    'mouse_attraction': MouseAttraction
+    'mouse_attraction': MouseAttraction,
+    'rotating_baton': RotatingBaton
 }
 
 const getScene = (key) => {
