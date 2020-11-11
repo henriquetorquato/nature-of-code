@@ -1,21 +1,27 @@
-import RandomWalker from './random_walker'
-import PaintSplatter from './paint_splatter'
-import ColorNoise from './color_noise'
-import NoiseLanscape from './noise_landscape'
-import BouncingSphere from './bouncing_sphere'
-import CarAcceleration from './car_acceleration'
-import PerlinAcceleration from './perlin_acceleration'
-import GravitationalAcceleration from './gravitational_acceleration'
+// Main Project
 import Ecosystem from './ecosystem/scene'
-import HeliumBalloon from './helium_balloon'
-import BouncingBall from './bouncing_ball'
-import PortalGels from './portal_gels'
-import FluidDrag from './fluid_drag'
-import LiftDrag from './lift_drag'
-import AttractorDesign from './attractor_design'
-import MouseAttraction from './mouse_attraction'
+
+// Chapter 1: Vectors
+import RandomWalker from './chapter_1_vectors/random_walker'
+import PaintSplatter from './chapter_1_vectors/paint_splatter'
+import ColorNoise from './chapter_1_vectors/color_noise'
+import NoiseLanscape from './chapter_1_vectors/noise_landscape'
+import BouncingSphere from './chapter_1_vectors/bouncing_sphere'
+import CarAcceleration from './chapter_1_vectors/car_acceleration'
+import PerlinAcceleration from './chapter_1_vectors/perlin_acceleration'
+import GravitationalAcceleration from './chapter_1_vectors/gravitational_acceleration'
+
+// Chapter 2: Forces
+import HeliumBalloon from './chapter_2_forces/helium_balloon'
+import BouncingBall from './chapter_2_forces/bouncing_ball'
+import PortalGels from './chapter_2_forces/portal_gels'
+import FluidDrag from './chapter_2_forces/fluid_drag'
+import LiftDrag from './chapter_2_forces/lift_drag'
+import AttractorDesign from './chapter_2_forces/attractor_design'
+import MouseAttraction from './chapter_2_forces/mouse_attraction'
 
 const scenes = {
+    'ecosystem': Ecosystem,
     'random_walker': RandomWalker,
     'paint_splatter': PaintSplatter,
     'color_noise': ColorNoise,
@@ -24,7 +30,6 @@ const scenes = {
     'car_acceleration': CarAcceleration,
     'perlin_acceleration': PerlinAcceleration,
     'gravitational_acceleration': GravitationalAcceleration,
-    'ecosystem': Ecosystem,
     'helium_balloon': HeliumBalloon,
     'bouncing_ball': BouncingBall,
     'portal_gels': PortalGels,
