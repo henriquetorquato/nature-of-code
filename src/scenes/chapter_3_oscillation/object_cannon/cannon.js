@@ -1,35 +1,29 @@
 import Rect from '@resources/rect'
 import { Vector } from 'p5'
 
-const CANNON_SIZE = 80
+const CANNON_SIZE = 150
 const CANNON_WIDTH = 20
-const CANNON_BASE_SIZE = 30
-const MIN_CANNON_ANGLE = 220
-const MAX_CANNON_ANGLE = 250
+const MIN_CANNON_ANGLE = 235
+const MAX_CANNON_ANGLE = 270
 const CANNON_ANGLE_SPEED = 0.5
-const CANNON_RECT_SIZE = 50
 const CANNON_FORCE_SCALE = 1000
+const FIRE_RELOAD_TIME = 100
 
 export default class Cannon {
+
+    fireQueue = []
 
     constructor(position) {
         this.position = position
         this.angle = MIN_CANNON_ANGLE
-        this.angleDirection = CANNON_ANGLE_SPEED
-        this.size = {
-            width: CANNON_RECT_SIZE,
-            height: CANNON_RECT_SIZE
-        }
-
-        this.barrelAnchor = createVector(-CANNON_WIDTH / 2, -5)
+        this.angularVelocity = CANNON_ANGLE_SPEED
+        this.timeout = Date.now()
     }
 
     get fireRect() {
-        const corner = createVector(
-            this.position.x - this.size.width / 2,
-            this.position.y - this.size.height / 2)
-
-        return Rect.from(corner, this.size)
+        const corner = createVector(this.position.x - 60, this.position.y - 70)
+        const size = { width: 120, height: 40 }
+        return Rect.from(corner, size)
     }
 
     get cannonTip() {
@@ -37,7 +31,7 @@ export default class Cannon {
         *   The cannon tip in reference from angle 0.
         *   P.S: Yes, it points down.
         */
-        let tip = createVector(0, CANNON_SIZE + this.barrelAnchor.x)
+        let tip = createVector(CANNON_WIDTH / 2, CANNON_SIZE)
 
         // Rotate the same amount as the cannon
         tip.rotate(this.angle)
@@ -48,35 +42,52 @@ export default class Cannon {
 
     update() {
         this.angle = this.nextAngle()
+
+        if (this.fireQueue.length > 0 && Date.now() > this.timeout)
+        {
+            const next = this.fireQueue.pop()
+            this.fire(next)
+            this.timeout = Date.now() + FIRE_RELOAD_TIME
+        }
     }
 
     display() {
         push()
         angleMode(DEGREES)
-        noStroke()
-        fill(100)
+        fill(80)
         translate(this.position.x, this.position.y)
         rotate(this.angle)
-        rect(this.barrelAnchor.x, this.barrelAnchor.y, CANNON_WIDTH, CANNON_SIZE)
+        rect(0, 0, CANNON_WIDTH, CANNON_SIZE)
         pop()
 
         push()
-        noStroke()
+        translate(this.position.x, this.position.y - 40)
+        fill(80)
+        triangle(0, 0, 60, -30, -60, -30) // Funnel body
+        fill(100)
+        rect(-60, -70, 120, 40) // Funnel top
+        fill(75)
+        rect(-10, -5, 20, 20) // Funnel bottom
+        fill(100)
+        circle(0, 40, 70) // Storage unit
         fill(158, 115, 70)
-        translate(this.position.x, this.position.y)
-        triangle(0, 0, -CANNON_BASE_SIZE, CANNON_BASE_SIZE, CANNON_BASE_SIZE, CANNON_BASE_SIZE)
+        triangle(0, 50, -60, 100, 60, 100) // Cannon base
         pop()
     }
 
     nextAngle() {
         if (this.angle < MIN_CANNON_ANGLE) {
-            this.angleDirection = CANNON_ANGLE_SPEED
+            this.angularVelocity = CANNON_ANGLE_SPEED
         }
         else if(this.angle > MAX_CANNON_ANGLE) {
-            this.angleDirection = -CANNON_ANGLE_SPEED
+            this.angularVelocity = -CANNON_ANGLE_SPEED
         }
 
-        return this.angle + this.angleDirection
+        return this.angle + this.angularVelocity
+    }
+
+    queue(object) {
+        this.fireQueue.unshift(object)
     }
 
     fire(object) {
@@ -94,7 +105,7 @@ export default class Cannon {
         // Scale the force
         const force = Vector.mult(direction, CANNON_FORCE_SCALE)
         object.applyForce(force)
-        object.applyAngularForce(-1000)
+        object.applyAngularForce(-CANNON_FORCE_SCALE)
 
         object.appear()
     }

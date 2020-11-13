@@ -2,14 +2,16 @@ import { Vector } from 'p5'
 import Rect from '@resources/rect'
 import Walker from '@entities/walker'
 
+const SIZE_MEAN = 20
+const SIZE_DEVIATION = 10
+
 export default class RandomObject extends Walker {
 
     constructor(position) {
         super(position)
-        this.size = {
-            width: 20,
-            height: 20
-        }
+
+        this.size = this.randomSize()
+        this.color = Math.randomColor()
 
         this.centerOffset = createVector(-this.size.width / 2, -this.size.height / 2)
         this.area = (this.size.width * this.size.height) / 4
@@ -27,12 +29,20 @@ export default class RandomObject extends Walker {
         const center = Vector.sub(this.position, this.centerOffset)
 
         push()
-        noStroke()
         translate(center.x, center.y)
         rotate(this.angle)
-        fill(100, 200, 100)
+        fill(this.color.r, this.color.g, this.color.b)
         rect(this.centerOffset.x, this.centerOffset.y, this.size.width, this.size.height)
         pop()
+    }
+
+    randomSize() {
+        const size = randomGaussian(SIZE_MEAN, SIZE_DEVIATION)
+
+        return {
+            width: size,
+            height: size
+        }
     }
 
     disappear() {
