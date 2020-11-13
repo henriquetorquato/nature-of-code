@@ -8,6 +8,10 @@ export default class Walker {
         this.velocity = createVector(0, 0, 0)
         this.acceleration = createVector(0, 0, 0)
 
+        this.angle = 0
+        this.angularVelocity = 0
+        this.angularAcceleration = 0
+
         this.velocityLimit = null
         this.canvasBorder = null
     }
@@ -15,6 +19,7 @@ export default class Walker {
     update() {
         // Apply acceleration vector
         this.velocity.add(this.acceleration)
+        this.angularVelocity += this.angularAcceleration
 
         // Limit velocity vector
         if (this.velocityLimit !== null) {
@@ -28,16 +33,22 @@ export default class Walker {
             this.velocity = velocity
         }
 
-        // Apply velocity vector
+        // Apply velocity
         this.position.add(this.velocity)
+        this.angle += this.angularVelocity
 
         // Reset acceleration
         this.acceleration.mult(0)
+        this.angularAcceleration = 0
     }
 
     applyForce(force) {
         let newForce = Vector.div(force, this.mass)
         this.acceleration.add(newForce)
+    }
+
+    applyAngularForce(force) {
+        this.angularAcceleration += force / this.mass
     }
 
 }
