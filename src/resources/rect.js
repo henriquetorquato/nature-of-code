@@ -32,13 +32,24 @@ export default class Rect {
         return new this(x, y, size, size)
     }
 
+    static inside(rect1, rect2) {
+        const left = rect1.x > rect2.x
+        const right = rect1.x + rect1.width < rect2.x + rect2.width
+        const top = rect1.y > rect2.y
+        const bottom = rect1.y + rect1.height < rect2.y + rect2.height
+        
+        return left && right && top && bottom
+    }
+
     static intersects(rect1, rect2) {
+        return this.overlapArea(rect1, rect2) > 0
+    }
+
+    static overlapArea(rect1, rect2) {
         // https://math.stackexchange.com/questions/99565/simplest-way-to-calculate-the-intersect-area-of-two-rectangles
         const x_overlap = Math.max(0, Math.min(rect1.right, rect2.right) - Math.max(rect1.left, rect2.left));
         const y_overlap = Math.max(0, Math.min(rect1.bottom, rect2.bottom) - Math.max(rect1.top, rect2.top));
         const overlapArea = x_overlap * y_overlap;
-
-        return overlapArea > 0        
     }
 
 }

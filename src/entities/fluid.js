@@ -1,5 +1,5 @@
-import Rect from '@resources/rect'
 import { Vector } from 'p5'
+import Rect from '@resources/rect'
 
 export default class Fluid {
 
