@@ -4,7 +4,7 @@ import Window from './window'
 export default class Director {
 
     setup() {
-        this.scene = getScene('object_cannon')
+        this.scene = getScene('driving_car')
         const renderer = this.scene.renderer ? this.scene.renderer : P2D
 
         const gameWindow = new Window(500, 500, renderer)
@@ -16,6 +16,13 @@ export default class Director {
 
     draw() {       
         this.scene.draw()
+    }
+
+    keyPressed() {
+        if (this.scene.keyPressed)
+        {
+            this.scene.keyPressed()
+        }
     }
 
 }

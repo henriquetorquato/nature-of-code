@@ -17,3 +17,7 @@ window.setup = () => {
 window.draw = () => {
     director.draw()
 }
+
+window.keyPressed = () => {
+    director.keyPressed()
+}

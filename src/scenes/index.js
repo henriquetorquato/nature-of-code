@@ -23,6 +23,7 @@ import MouseAttraction from './chapter_2_forces/mouse_attraction'
 // Chapter 3: Oscillation
 import RotatingBaton from './chapter_3_oscillation/rotating_baton'
 import ObjectCannon from './chapter_3_oscillation/object_cannon/object_cannon'
+import DrivingCar from './chapter_3_oscillation/driving_car/driving_car'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -42,7 +43,8 @@ const scenes = {
     'attractor_design': AttractorDesign,
     'mouse_attraction': MouseAttraction,
     'rotating_baton': RotatingBaton,
-    'object_cannon': ObjectCannon
+    'object_cannon': ObjectCannon,
+    'driving_car': DrivingCar
 }
 
 const getScene = (key) => {
