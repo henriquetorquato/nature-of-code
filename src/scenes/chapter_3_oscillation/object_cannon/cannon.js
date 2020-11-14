@@ -7,17 +7,13 @@ const MIN_CANNON_ANGLE = 235
 const MAX_CANNON_ANGLE = 270
 const CANNON_ANGLE_SPEED = 0.5
 const CANNON_FORCE_SCALE = 1000
-const FIRE_RELOAD_TIME = 100
 
 export default class Cannon {
-
-    fireQueue = []
 
     constructor(position) {
         this.position = position
         this.angle = MIN_CANNON_ANGLE
         this.angularVelocity = CANNON_ANGLE_SPEED
-        this.timeout = Date.now()
     }
 
     get fireRect() {
@@ -42,13 +38,6 @@ export default class Cannon {
 
     update() {
         this.angle = this.nextAngle()
-
-        if (this.fireQueue.length > 0 && Date.now() > this.timeout)
-        {
-            const next = this.fireQueue.pop()
-            this.fire(next)
-            this.timeout = Date.now() + FIRE_RELOAD_TIME
-        }
     }
 
     display() {
@@ -84,10 +73,6 @@ export default class Cannon {
         }
 
         return this.angle + this.angularVelocity
-    }
-
-    queue(object) {
-        this.fireQueue.unshift(object)
     }
 
     fire(object) {

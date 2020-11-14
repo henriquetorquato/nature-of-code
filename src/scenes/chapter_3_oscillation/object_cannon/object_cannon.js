@@ -41,7 +41,7 @@ export default class ObjectCannon {
             if (Rect.intersects(object.rect, this.cannon.fireRect))
             {
                 object.disappear()
-                this.cannon.queue(object)
+                this.cannon.fire(object)
             }
             else
             {
