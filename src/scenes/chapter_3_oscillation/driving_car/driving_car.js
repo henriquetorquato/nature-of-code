@@ -13,38 +13,25 @@ export default class DrivingCar {
         clear()
         background(220)
 
-        this.nextThrottle()
-        
-        // TO-DO: Implement car steering
-        const angle = this.nextSteering()
+        if (keyIsDown(LEFT_ARROW))
+        {
+            this.car.left()
+        }
+        else if (keyIsDown(RIGHT_ARROW))
+        {
+            this.car.right()
+        }
+
+        if (keyIsDown(UP_ARROW))
+        {
+            this.car.forward()
+        }
 
         const friction = this.road.drag(this.car.velocity, this.car.area)
         this.car.applyForce(friction)
 
         this.car.update()
         this.car.display()
-    }
-
-    nextThrottle() {
-        if (keyIsDown(UP_ARROW))
-        {
-            this.car.forward()
-        }
-        else if (keyIsDown(DOWN_ARROW))
-        {
-            this.car.backward()
-        }
-    }
-
-    nextSteering() {
-        if (keyIsDown(LEFT_ARROW))
-        {
-            return 45
-        }
-        else if (keyIsDown(RIGHT_ARROW))
-        {
-            return -45
-        }
     }
 
 }
