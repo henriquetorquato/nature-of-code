@@ -4,7 +4,7 @@ import Spaceship from './spaceship'
 export default class AsteroidsSpaceship {
 
     setup() {
-        const position = Vector.copy(window.canvasCenter)
+        const position = Math.randomPosition()
         this.spaceship = new Spaceship(position)
     }
 
@@ -26,6 +26,7 @@ export default class AsteroidsSpaceship {
             this.spaceship.forward()
         }
 
+        this.spaceship.update()
         this.spaceship.display()
     }
 
