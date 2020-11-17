@@ -26,6 +26,7 @@ import ObjectCannon from './chapter_3_oscillation/object_cannon/object_cannon'
 import DrivingCar from './chapter_3_oscillation/driving_car/driving_car'
 import Spiral from './chapter_3_oscillation/spiral'
 import AsteroidsSpaceship from './chapter_3_oscillation/asteroids_spaceship/asteroids_spaceship'
+import SineSpring from './chapter_3_oscillation/sine_spring'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -48,7 +49,8 @@ const scenes = {
     'object_cannon': ObjectCannon,
     'driving_car': DrivingCar,
     'spiral': Spiral,
-    'asteroids_spaceship': AsteroidsSpaceship
+    'asteroids_spaceship': AsteroidsSpaceship,
+    'sine_spring': SineSpring
 }
 
 const getScene = (key) => {
