@@ -28,6 +28,7 @@ import Spiral from './chapter_3_oscillation/spiral'
 import AsteroidsSpaceship from './chapter_3_oscillation/asteroids_spaceship/asteroids_spaceship'
 import SineSpring from './chapter_3_oscillation/sine_spring'
 import InsectLegs from './chapter_3_oscillation/insect_legs'
+import PerlinWave from './chapter_3_oscillation/perlin_wave'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -52,7 +53,8 @@ const scenes = {
     'spiral': Spiral,
     'asteroids_spaceship': AsteroidsSpaceship,
     'sine_spring': SineSpring,
-    'insect_legs': InsectLegs
+    'insect_legs': InsectLegs,
+    'perlin_wave': PerlinWave
 }
 
 const getScene = (key) => {
