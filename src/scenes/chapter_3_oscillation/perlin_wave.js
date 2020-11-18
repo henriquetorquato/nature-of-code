@@ -24,7 +24,7 @@ export default class PerlinWave {
             circle(x, y, CIRCLE_SIZE)
         }
 
-        this.startAngle += 0.01
+        this.startAngle += 0.003
     }
 
 }
