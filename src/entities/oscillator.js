@@ -4,6 +4,16 @@ export default class Oscillator {
         this.angle = angle
         this.amplitude = amplitude
         this.velocity = createVector(0, 0)
+        this.acceleration = createVector(0, 0)
+    }
+
+    accelerate(value) {
+        this.acceleration.add(value)
+    }
+
+    update() {
+        this.velocity.add(this.acceleration)
+        this.acceleration.mult(0)
     }
 
     oscillate() {
