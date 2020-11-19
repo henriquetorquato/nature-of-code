@@ -29,6 +29,7 @@ import AsteroidsSpaceship from './chapter_3_oscillation/asteroids_spaceship/aste
 import SineSpring from './chapter_3_oscillation/sine_spring'
 import InsectLegs from './chapter_3_oscillation/insect_legs'
 import PerlinWave from './chapter_3_oscillation/perlin_wave'
+import TwoWaves from './chapter_3_oscillation/two_waves'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -54,7 +55,8 @@ const scenes = {
     'asteroids_spaceship': AsteroidsSpaceship,
     'sine_spring': SineSpring,
     'insect_legs': InsectLegs,
-    'perlin_wave': PerlinWave
+    'perlin_wave': PerlinWave,
+    'two_waves': TwoWaves
 }
 
 const getScene = (key) => {

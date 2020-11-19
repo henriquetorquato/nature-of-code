@@ -4,7 +4,7 @@ import Window from './window'
 export default class Director {
 
     setup() {
-        this.scene = getScene('perlin_wave')
+        this.scene = getScene('two_waves')
         const renderer = this.scene.renderer ? this.scene.renderer : P2D
 
         const gameWindow = new Window(500, 500, renderer)
