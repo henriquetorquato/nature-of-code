@@ -30,9 +30,11 @@ import SineSpring from './chapter_3_oscillation/sine_spring'
 import InsectLegs from './chapter_3_oscillation/insect_legs'
 import PerlinWave from './chapter_3_oscillation/perlin_wave'
 import TwoWaves from './chapter_3_oscillation/two_waves'
+import ComplexWave from './chapter_3_oscillation/complex_wave'
 
 const scenes = {
     'ecosystem': Ecosystem,
+
     'random_walker': RandomWalker,
     'paint_splatter': PaintSplatter,
     'color_noise': ColorNoise,
@@ -41,6 +43,7 @@ const scenes = {
     'car_acceleration': CarAcceleration,
     'perlin_acceleration': PerlinAcceleration,
     'gravitational_acceleration': GravitationalAcceleration,
+
     'helium_balloon': HeliumBalloon,
     'bouncing_ball': BouncingBall,
     'portal_gels': PortalGels,
@@ -48,6 +51,7 @@ const scenes = {
     'lift_drag': LiftDrag,
     'attractor_design': AttractorDesign,
     'mouse_attraction': MouseAttraction,
+    
     'rotating_baton': RotatingBaton,
     'object_cannon': ObjectCannon,
     'driving_car': DrivingCar,
@@ -56,7 +60,8 @@ const scenes = {
     'sine_spring': SineSpring,
     'insect_legs': InsectLegs,
     'perlin_wave': PerlinWave,
-    'two_waves': TwoWaves
+    'two_waves': TwoWaves,
+    'complex_wave': ComplexWave
 }
 
 const getScene = (key) => {
