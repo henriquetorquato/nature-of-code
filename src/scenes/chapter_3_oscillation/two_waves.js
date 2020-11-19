@@ -1,8 +1,8 @@
 export default class TwoWaves {
 
     setup() {
-        this.wave1 = new Wave(window.canvasCenter.y, window.canvasWidth, 0.01, 0.001, 20, 10)
-        this.wave2 = new Wave(-window.canvasCenter.y, window.canvasWidth, 0.01, 0.001, 20, 10)
+        this.wave1 = new Wave(window.canvasCenter.y, window.canvasWidth, 0.01, 0.001, 20, 40)
+        this.wave2 = new Wave(-window.canvasCenter.y, window.canvasWidth, 0.01, 0.001, 20, 40)
         this.wave3 = new Wave(100, window.canvasWidth, 0.1, 0.1, 20, 20)
         this.wave4 = new Wave(-window.canvasHeight, window.canvasWidth, 0.05, 0.1, 20, 20)
     }
