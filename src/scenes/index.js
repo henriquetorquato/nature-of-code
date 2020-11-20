@@ -31,6 +31,7 @@ import InsectLegs from './chapter_3_oscillation/insect_legs'
 import PerlinWave from './chapter_3_oscillation/perlin_wave'
 import TwoWaves from './chapter_3_oscillation/two_waves'
 import ComplexWave from './chapter_3_oscillation/complex_wave'
+import MultiplePendulums from './chapter_3_oscillation/multiple_pendulums'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -61,7 +62,8 @@ const scenes = {
     'insect_legs': InsectLegs,
     'perlin_wave': PerlinWave,
     'two_waves': TwoWaves,
-    'complex_wave': ComplexWave
+    'complex_wave': ComplexWave,
+    'multiple_pendulums': MultiplePendulums
 }
 
 const getScene = (key) => {
