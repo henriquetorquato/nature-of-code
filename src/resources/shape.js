@@ -1,27 +1,42 @@
 import { Vector } from 'p5'
 
 // https://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169
-export default class Shape {
+export class Shape {
 
-    constructor(position, points) {
+    constructor(position, points, angle) {
         this.position = position
-        this.points = points
+        this.points = Shape.rotate(position, points, angle)
     }
 
     draw() {
         beginShape()
         this.points.forEach(point =>
-        {
-            vertex(point.x, point.y)
-        })
+            vertex(point.x, point.y))
         endShape(CLOSE)
     }
 
-    static fromSquare(position, size) {
-        return this.fromRect(position, size, size)
+    // https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
+    static rotate(pivot, points, angle) {
+        angle *= PI / 180
+
+        const rotated = []
+        const cos = Math.cos(angle)
+        const sin = Math.sin(angle)
+
+        points.forEach(point =>
+        {
+            const distance = Vector.sub(pivot, point)
+            const x = cos * distance.x - sin * distance.y + pivot.x
+            const y = sin * distance.x + cos * distance.y + pivot.y
+
+            rotated.push(
+                createVector(x, y))
+        })
+
+        return rotated
     }
 
-    static fromRect(position, width, height) {
+    static fromRect(position, width, height, angle) {
         const points = [
             createVector(position.x, position.y),
             createVector(position.x + width, position.y),
@@ -29,8 +44,16 @@ export default class Shape {
             createVector(position.x, position.y + height)
         ]
 
-        return new this(position, points)
+        return new this(position, points, angle)
     }
+
+    static fromSquare(position, size, angle) {
+        return this.fromRect(position, size, size, angle)
+    }
+
+}
+
+export class Shapes {
 
     static castDimention(shape, dimention) {
         let min = null
