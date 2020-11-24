@@ -1,5 +1,6 @@
 import { Vector } from 'p5'
 
+// https://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169
 export default class Shape {
 
     constructor(position, points) {
