@@ -80,15 +80,35 @@ export class Shapes {
         }
     }
 
+    // TO-DO: Implement rotation on the cast.
+    static cast(shape, color) {
+        const castX = this.castDimention(shape, 'x')
+        const castY = this.castDimention(shape, 'y')
+
+        const x1 = Vector.sub(createVector(castX.min.x, window.canvasHeight), castX.min)
+        const x2 = Vector.sub(createVector(castX.max.x, window.canvasHeight), castX.max)
+        const y1 = Vector.sub(createVector(window.canvasWidth, castY.min.y), castY.min)
+        const y2 = Vector.sub(createVector(window.canvasWidth, castY.max.y), castY.max)
+
+        Vector.drawArrow(castX.min, x1, color)
+        Vector.drawArrow(castX.max, x2, color)
+        Vector.drawArrow(castY.min, y1, color)
+        Vector.drawArrow(castY.max, y2, color)
+    }
+
     static intersects(shape1, shape2) {
-        const castX1 = this.castDimention(shape1, 'x')
-        const castY1 = this.castDimention(shape1, 'y')
+        // const castX1 = this.castDimention(shape1, 'x')
+        // const castY1 = this.castDimention(shape1, 'y')
 
-        const v1 = Vector.sub(createVector(castX1.min.x, window.canvasHeight), castX1.min)
-        const v2 = Vector.sub(createVector(castX1.max.x, window.canvasHeight), castX1.max)
+        // const v1 = Vector.sub(createVector(castX1.min.x, window.canvasHeight), castX1.min)
+        // const v2 = Vector.sub(createVector(castX1.max.x, window.canvasHeight), castX1.max)
+        // const v3 = Vector.sub(createVector(window.canvasWidth, castY1.min.y), castY1.min)
+        // const v4 = Vector.sub(createVector(window.canvasWidth, castY1.max.y), castY1.max)
 
-        Vector.drawArrow(castX1.min, v1, 'red')
-        Vector.drawArrow(castX1.max, v2, 'red')
+        // Vector.drawArrow(castX1.min, v1, 'red')
+        // Vector.drawArrow(castX1.max, v2, 'red')
+        // Vector.drawArrow(castY1.min, v3, 'red')
+        // Vector.drawArrow(castY1.max, v4, 'red')
     }
 
 }
