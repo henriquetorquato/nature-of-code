@@ -32,6 +32,7 @@ import PerlinWave from './chapter_3_oscillation/perlin_wave'
 import TwoWaves from './chapter_3_oscillation/two_waves'
 import ComplexWave from './chapter_3_oscillation/complex_wave'
 import MultiplePendulums from './chapter_3_oscillation/multiple_pendulums'
+import SlidingBox from './chapter_3_oscillation/sliding_box'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -63,7 +64,8 @@ const scenes = {
     'perlin_wave': PerlinWave,
     'two_waves': TwoWaves,
     'complex_wave': ComplexWave,
-    'multiple_pendulums': MultiplePendulums
+    'multiple_pendulums': MultiplePendulums,
+    'sliding_box': SlidingBox
 }
 
 const getScene = (key) => {
