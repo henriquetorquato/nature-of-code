@@ -6,34 +6,56 @@ export class Shape {
     constructor(position, points, angle) {
         this.position = position
         this.points = Shape.rotate(position, points, angle)
+        this.angle = angle
+
+        const { longestAxis, projectionAngle } = this._longestAxisInfo(points)
+        this.longestAxis = longestAxis
+        this.projectionAngle = projectionAngle
+    }
+
+    _longestAxisInfo(points) {
+        let longest = null
+        for (let i = 0; i < points.length; i++)
+        {
+            const p1 = points[i]
+            const p2 = points[i + 1] === undefined ? 0 : points[i + 1]
+            const distance = Vector.sub(p1, p2)
+
+            if (longest === null || distance.mag() > longest.mag())
+            {
+                longest = distance
+            }
+        }
+
+        return {
+            longestAxis: longest.mag(),
+            projectionAngle: longest.angleBetween(createVector(0, 1))
+        }
     }
 
     draw() {
         beginShape()
         this.points.forEach(point =>
-            vertex(point.x, point.y))
+        {
+            vertex(point.x, point.y)
+        })
         endShape(CLOSE)
     }
 
     // https://stackoverflow.com/questions/4465931/rotate-rectangle-around-a-point
     static rotate(pivot, points, angle) {
         angle *= PI / 180
-
-        const rotated = []
         const cos = Math.cos(angle)
         const sin = Math.sin(angle)
 
-        points.forEach(point =>
+        return points.map(point =>
         {
             const distance = Vector.sub(pivot, point)
             const x = cos * distance.x - sin * distance.y + pivot.x
             const y = sin * distance.x + cos * distance.y + pivot.y
 
-            rotated.push(
-                createVector(x, y))
-        })
-
-        return rotated
+            return createVector(x, y)
+        })  
     }
 
     static fromRect(position, width, height, angle) {
@@ -55,22 +77,30 @@ export class Shape {
 
 export class Shapes {
 
-    static castDimention(shape, dimention) {
-        let min = null
-        let max = null
+    static projectDimention(shape, dimention, angle = 0, pivot = createVector(0, 0)) {
+        let min, rotatedMin = null
+        let max, rotatedMax = null
+
+        const angleValue = dimention === 'width'
+            ? Math.cos(-angle)
+            : Math.sin(-angle)
 
         shape.points.forEach(point =>
         {
-            const value = point[dimention]
+            // Rotate the shape back
+            const distance = Vector.sub(pivot, point).mag()
+            const value = distance * angleValue
 
-            if (min === null || value < min[dimention])
+            if (min === null || rotatedMin === null || value < rotatedMin)
             {
                 min = point
+                rotatedMin = value
             }
 
-            if (max === null || value > max[dimention])
+            if (max === null || rotatedMax === null || value > rotatedMax)
             {
                 max = point
+                rotatedMax = value
             }
         })
 
@@ -80,35 +110,40 @@ export class Shapes {
         }
     }
 
-    // TO-DO: Implement rotation on the cast.
-    static cast(shape, color) {
-        const castX = this.castDimention(shape, 'x')
-        const castY = this.castDimention(shape, 'y')
+    static projectShape(shape, angle = 0, pivot = createVector(0, 0)) {
+        return {
+            x: this.projectDimention(shape, 'width', angle, pivot),
+            y: this.projectDimention(shape, 'heigth', angle, pivot)
+        }
+    }
 
-        const x1 = Vector.sub(createVector(castX.min.x, window.canvasHeight), castX.min)
-        const x2 = Vector.sub(createVector(castX.max.x, window.canvasHeight), castX.max)
-        const y1 = Vector.sub(createVector(window.canvasWidth, castY.min.y), castY.min)
-        const y2 = Vector.sub(createVector(window.canvasWidth, castY.max.y), castY.max)
+    static drawProjection(projection, angle, color) {
+        let x1 = Vector.sub(createVector(projection.x.min.x, window.canvasHeight), projection.x.min)
+        let x2 = Vector.sub(createVector(projection.x.max.x, window.canvasHeight), projection.x.max)
+        let y1 = Vector.sub(createVector(window.canvasWidth, projection.y.min.y), projection.y.min)
+        let y2 = Vector.sub(createVector(window.canvasWidth, projection.y.max.y), projection.y.max)
 
-        Vector.drawArrow(castX.min, x1, color)
-        Vector.drawArrow(castX.max, x2, color)
-        Vector.drawArrow(castY.min, y1, color)
-        Vector.drawArrow(castY.max, y2, color)
+        // x1.rotate(-angle)
+        // x2.rotate(-angle)
+        // y1.rotate(-angle)
+        // y2.rotate(-angle)
+
+        Vector.drawArrow(projection.x.min, x1, color)
+        Vector.drawArrow(projection.x.max, x2, color)
+        Vector.drawArrow(projection.y.min, y1, color)
+        Vector.drawArrow(projection.y.max, y2, color)
     }
 
     static intersects(shape1, shape2) {
-        // const castX1 = this.castDimention(shape1, 'x')
-        // const castY1 = this.castDimention(shape1, 'y')
+        const angle = shape1.longestAxis > shape2.longestAxis
+            ? shape1.projectionAngle
+            : shape2.projectionAngle
 
-        // const v1 = Vector.sub(createVector(castX1.min.x, window.canvasHeight), castX1.min)
-        // const v2 = Vector.sub(createVector(castX1.max.x, window.canvasHeight), castX1.max)
-        // const v3 = Vector.sub(createVector(window.canvasWidth, castY1.min.y), castY1.min)
-        // const v4 = Vector.sub(createVector(window.canvasWidth, castY1.max.y), castY1.max)
+        const projection1 = this.projectShape(shape1)
+        const projection2 = this.projectShape(shape2)
 
-        // Vector.drawArrow(castX1.min, v1, 'red')
-        // Vector.drawArrow(castX1.max, v2, 'red')
-        // Vector.drawArrow(castY1.min, v3, 'red')
-        // Vector.drawArrow(castY1.max, v4, 'red')
+        this.drawProjection(projection1, angle, 'red')
+        this.drawProjection(projection2, angle, 'blue')
     }
 
 }

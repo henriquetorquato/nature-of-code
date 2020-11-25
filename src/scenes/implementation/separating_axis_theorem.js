@@ -1,11 +1,12 @@
-import { Shape, Shapes } from '@resources/shape'
+import { Vector } from 'p5'
 import Walker from '@entities/walker'
+import { Shape, Shapes } from '@resources/shape'
 
 export default class SeparatingAxisTheorem {
 
     setup() {
-        this.ramp = new Ramp(createVector(250, 300), 200, 5)
         this.box = new Box(createVector(250, 250), 20)
+        this.ramp = new Ramp(createVector(250, 300), 200, 5)
     }
 
     draw() {
@@ -15,8 +16,7 @@ export default class SeparatingAxisTheorem {
         this.box.display()
         this.ramp.display()
 
-        Shapes.cast(this.box.shape, 'blue')
-        Shapes.cast(this.ramp.shape, 'red')
+        Shapes.intersects(this.box.shape, this.ramp.shape)
     }
 
 }
@@ -33,12 +33,8 @@ class Box extends Walker {
     }
 
     display() {
-        const position = createVector(0, 0)
-        const shape = Shape.fromSquare(position, this.size, 45)
-
         push()
-        translate(this.position.x, this.position.y)
-        shape.draw()
+        this.shape.draw()
         pop()
     }
 
@@ -53,16 +49,12 @@ class Ramp {
     }
 
     get shape() {
-        return Shape.fromRect(this.position, this.width, this.heigth, -30)
+        return Shape.fromRect(this.position, this.width, this.heigth, -45)
     }
 
     display() {
-        const position = createVector(0, 0)
-        const shape = Shape.fromRect(position, this.width, this.heigth, -30)
-
         push()
-        translate(this.position.x, this.position.y)
-        shape.draw()
+        this.shape.draw()
         pop()
     }
 
