@@ -1,43 +1,54 @@
 import { Vector } from 'p5'
 import Walker from '@entities/walker'
+import { TeleportingBorder } from '../../resources/border/teleporting'
 
-const RAMP_SIZE = 300
+const GRAVITY = 0.98
+const FRICTION = 0.001
 const RAMP_WIDTH = 5
+
+const BOX_MASS = 1
 const BOX_SIZE = 20
-const ANGLE = -30
+const BOX_VELOCITY_LIMIT = 10
+
+const ANGLE_VARIATION = 20
+const ANGLE_VELOCITY = 0.01
 
 export default class SlidingBox {
 
     setup() {
-        const position = createVector((RAMP_SIZE / 2) - BOX_SIZE, -BOX_SIZE)
-        this.box = new Box(position, 10, BOX_SIZE)
+        const position = Vector.add(window.canvasCenter,
+            createVector(-BOX_SIZE / 2, -BOX_SIZE))
 
-        angleMode(DEGREES)
-        this.gravity = createVector(0, 0.98).rotate(-ANGLE)
+        this.box = new Box(position, BOX_MASS, BOX_SIZE)
+        this.index = 0
     }
 
     draw() {
         clear()
         background(220)
-        
+
+        const angle = this.nextAngle() * PI / 180
+        this.gravity = createVector(
+            GRAVITY * this.box.mass * Math.sin(angle),
+            GRAVITY * this.box.mass * Math.cos(angle))
+
+        const force = createVector(this.gravity.x - FRICTION * this.gravity.y, 0)
+        this.box.applyForce(force)
+        this.box.update()
+
         push()
         translate(window.canvasCenter.x, window.canvasCenter.y)
-        angleMode(DEGREES)
-        // rotate(ANGLE)
-        rect(-RAMP_SIZE / 2, 0, RAMP_SIZE, RAMP_WIDTH)
-        this.box.display()
+        rotate(angle)
+        rect(-window.canvasWidth, 0, 2 * window.canvasWidth, RAMP_WIDTH)
+
+        const position = Vector.sub(this.box.position, window.canvasCenter)
+        this.box.display(position)
         pop()
+    }
 
-        const center = createVector(
-            window.canvasCenter.x + this.box.position.x + this.box.size / 2,
-            window.canvasCenter.y + this.box.position.y + this.box.size / 2)
-
-        const y = this.gravity.y * this.box.mass * Math.cos(ANGLE)
-        const x = this.gravity.x * this.box.mass * Math.sin(ANGLE)
-
-        Vector.drawArrow(center, Vector.mult(this.gravity, 50), 'red')
-        Vector.drawArrow(center, Vector.mult(createVector(0, y), 20), 'blue')
-        Vector.drawArrow(center, Vector.mult(createVector(x, 0), 20), 'blue')
+    nextAngle() {
+        this.index += ANGLE_VELOCITY
+        return Math.sin(this.index) * ANGLE_VARIATION
     }
 
 }
@@ -47,10 +58,12 @@ class Box extends Walker {
     constructor(position, mass, size) {
         super(position, mass)
         this.size = size
+        this.canvasBorder = new TeleportingBorder()
+        this.velocityLimit = BOX_VELOCITY_LIMIT
     }
 
-    display() {
-        square(this.position.x, this.position.y, this.size)
+    display(position = this.position) {
+        square(position.x, position.y, this.size)
     }
 
 }
