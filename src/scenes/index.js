@@ -33,6 +33,7 @@ import TwoWaves from './chapter_3_oscillation/two_waves'
 import ComplexWave from './chapter_3_oscillation/complex_wave'
 import MultiplePendulums from './chapter_3_oscillation/multiple_pendulums'
 import SlidingBox from './chapter_3_oscillation/sliding_box'
+import SpringBob from './chapter_3_oscillation/spring_bob'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -65,7 +66,8 @@ const scenes = {
     'two_waves': TwoWaves,
     'complex_wave': ComplexWave,
     'multiple_pendulums': MultiplePendulums,
-    'sliding_box': SlidingBox
+    'sliding_box': SlidingBox,
+    'spring_bob': SpringBob
 }
 
 const getScene = (key) => {
