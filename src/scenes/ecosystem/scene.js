@@ -4,6 +4,8 @@ import { Air, Water } from './fluids'
 import { JumpingFrog, generateLilypads } from '@entities/creatures/frog'
 import { BigFish, SmallFish } from '@entities/creatures/fish'
 
+import { SlitheringSnake } from '@entities/creatures/snake'
+
 export default class Ecosystem {
 
     fishes = []
@@ -34,47 +36,53 @@ export default class Ecosystem {
         })
 
         this.spawn(NervousFly, 10, this.flies, this.flyKilled.bind(this))
+
+
+        this.snake = new SlitheringSnake(createVector(250, 250))
     }
 
     draw() {
         clear()
         background(255)
 
-        this.fishSpawner.check()
+        // this.fishSpawner.check()
 
-        this.fishes.forEach(entity =>
-        {
-            if (entity.checkTarget)
-            {
-                for (let i = 0; i < this.fishes.length; i++)
-                {
-                    const target = this.fishes[i]
-                    entity.checkTarget(target)
-                }
-            }
+        // this.fishes.forEach(entity =>
+        // {
+        //     if (entity.checkTarget)
+        //     {
+        //         for (let i = 0; i < this.fishes.length; i++)
+        //         {
+        //             const target = this.fishes[i]
+        //             entity.checkTarget(target)
+        //         }
+        //     }
 
-            const drag = this.water.drag(entity.velocity, entity.area)
-            entity.applyForce(drag)
+        //     const drag = this.water.drag(entity.velocity, entity.area)
+        //     entity.applyForce(drag)
 
-            entity.update()
-            entity.display()
-        })
+        //     entity.update()
+        //     entity.display()
+        // })
         
         this.water.display()
-        this.lilypads.forEach(lilypad => lilypad.display())
+        // this.lilypads.forEach(lilypad => lilypad.display())
 
-        this.frog.checkFlies(this.flies)
-        const drag = this.air.drag(this.frog.velocity, this.frog.area)
-        this.frog.applyForce(drag)
+        // this.frog.checkFlies(this.flies)
+        // const drag = this.air.drag(this.frog.velocity, this.frog.area)
+        // this.frog.applyForce(drag)
 
-        this.frog.update()
-        this.frog.display()
+        // this.frog.update()
+        // this.frog.display()
 
-        this.flies.forEach(fly =>
-        {
-            fly.update()
-            fly.display()
-        })
+        // this.flies.forEach(fly =>
+        // {
+        //     fly.update()
+        //     fly.display()
+        // })
+
+        this.snake.display()
+        this.snake.update()
     }
 
     spawn(type, amount, list, deathEvent = null) {
