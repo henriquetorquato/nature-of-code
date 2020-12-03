@@ -3,9 +3,9 @@ export default class Slithering {
     angle = 0
 
     constructor(genes) {
-        this.amplitude = genes.length
+        this.amplitude = genes.length / 2
         this.length = genes.length
-        this.angleVelocity = genes.slitheringVelocity
+        this.angleVelocity = genes.maxVelocity / 20
 
         this.circleSize = genes.size
         this.circleDistance = Math.floor(genes.size / 2)

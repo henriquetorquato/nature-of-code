@@ -13,8 +13,8 @@ export default class CreatureMovement {
         this.minBorderDistance = minBorderDistance
     }
 
-    nextDirection() {
-        this.directionOffset.add(0.01)       
+    nextDirection(offset = 0.01) {
+        this.directionOffset.add(0.01)
 
         const direction = createVector(
             map(noise(this.directionOffset.x), 0, 1, -1, 1),

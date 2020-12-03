@@ -3,8 +3,7 @@ import CreatureMovement from '../creature_movement'
 import SlitheringSnakeGenes from './genes'
 import Slithering from './slithering'
 
-const MAX_VELOCITY = 1
-const ACCELERATION_SCALE = 2
+const DIRECTION_OFFSET = 0.0001
 const MIN_BORDER_DISTANCE = 80
 
 export default class SlitheringSnake extends CreatureMovement {
@@ -22,23 +21,20 @@ export default class SlitheringSnake extends CreatureMovement {
     
     display() {
         this.slithering.update()
-        const angle = this.velocity.angleBetween(createVector(0, 1))
 
         push()
         noStroke()
         fill(this.genes.color)
         translate(this.position.x, this.position.y)
-        rotate(angle)
+        // Don't know why, but the PI constant was not working. Thus the 180 value.
+        rotate(this.direction.heading() + 180)
         this.slithering.display()
         pop()
     }
 
     update() {
-        this.direction = this.nextDirection()
-        this.acceleration = Vector.mult(this.direction, ACCELERATION_SCALE)
-
-        this.velocity.add(this.acceleration)
-        this.velocity.limit(MAX_VELOCITY)
+        this.direction = this.nextDirection(DIRECTION_OFFSET)
+        this.velocity = Vector.mult(this.direction, this.genes.maxVelocity)
         this.position.add(this.velocity)
     }
 
