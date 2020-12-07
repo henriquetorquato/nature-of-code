@@ -35,6 +35,9 @@ import MultiplePendulums from './chapter_3_oscillation/multiple_pendulums'
 import SlidingBox from './chapter_3_oscillation/sliding_box'
 import SpringBob from './chapter_3_oscillation/spring_bob'
 
+// Chapter 4: Particle Systems
+import ParticleForce from './chapter_4_particle_systems/particle_force'
+
 const scenes = {
     'ecosystem': Ecosystem,
 
@@ -67,7 +70,9 @@ const scenes = {
     'complex_wave': ComplexWave,
     'multiple_pendulums': MultiplePendulums,
     'sliding_box': SlidingBox,
-    'spring_bob': SpringBob
+    'spring_bob': SpringBob,
+
+    'particle_force': ParticleForce
 }
 
 const getScene = (key) => {
