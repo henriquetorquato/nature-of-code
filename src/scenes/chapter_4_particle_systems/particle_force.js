@@ -16,7 +16,6 @@ export default class ParticleForce {
 
         textSize(20)
         textFont(window.font)
-
     }
 
     draw() {
