@@ -4,7 +4,7 @@ import Window from './window'
 export default class Director {
 
     setup() {
-        this.scene = getScene('moving_system')
+        this.scene = getScene('asteroids_spaceship')
         const renderer = this.scene.renderer ? this.scene.renderer : P2D
 
         const gameWindow = new Window(500, 500, renderer)

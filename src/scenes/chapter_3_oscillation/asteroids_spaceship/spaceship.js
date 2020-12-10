@@ -1,5 +1,7 @@
 import Walker from '@entities/walker'
+import Thruster from './thruster'
 import { TeleportingBorder } from '@resources/border'
+import { Vector } from 'p5'
 
 const MASS = 1
 const THRUSTER_FORCE = 0.05
@@ -15,6 +17,9 @@ export default class Spaceship extends Walker {
         this.velocity = this.randomVelocity()
         this.canvasBorder = new TeleportingBorder()
         this.velocityLimit = VELOCITY_LIMIT
+
+        this.leftThruster = new Thruster(createVector(-12.5, 30))
+        this.rightThruster = new Thruster(createVector(12.5, 30))
     }
 
     display() {
@@ -35,6 +40,9 @@ export default class Spaceship extends Walker {
         if (this.accelerating)
         {
             fill(240, 142, 38)
+
+            this.leftThruster.add()
+            this.rightThruster.add()
         }
         else
         {
@@ -44,6 +52,12 @@ export default class Spaceship extends Walker {
         rect(-15, 20, 5, 5)
         rect(10, 20, 5, 5)
         pop()
+
+        this.leftThruster.rotate(this.position, this.angle)
+        this.rightThruster.rotate(this.position, this.angle)
+
+        this.leftThruster.run()
+        this.rightThruster.run()
 
         this.accelerating = false
     }

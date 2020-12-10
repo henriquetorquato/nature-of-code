@@ -4,14 +4,15 @@ export default class Particle extends Walker {
 
     lifespan = 255
 
-    constructor(position, size) {
+    constructor(position, size, lifespanTic = 2) {
         super(position)
         this.size = size
+        this.lifespanTic = lifespanTic
     }
 
     update() {
         super.update()
-        this.lifespan -= 2
+        this.lifespan -= this.lifespanTic
     }
 
     display() {
