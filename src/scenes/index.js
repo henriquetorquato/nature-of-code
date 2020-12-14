@@ -38,6 +38,7 @@ import SpringBob from './chapter_3_oscillation/spring_bob'
 // Chapter 4: Particle Systems
 import ParticleForce from './chapter_4_particle_systems/particle_force'
 import MovingSystem from './chapter_4_particle_systems/moving_system'
+import SystemSpawner from './chapter_4_particle_systems/system_spawner'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -74,7 +75,8 @@ const scenes = {
     'spring_bob': SpringBob,
 
     'particle_force': ParticleForce,
-    'moving_system': MovingSystem
+    'moving_system': MovingSystem,
+    'system_spawner': SystemSpawner
 }
 
 const getScene = (key) => {

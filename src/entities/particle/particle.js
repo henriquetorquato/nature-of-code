@@ -12,7 +12,11 @@ export default class Particle extends Walker {
 
     update() {
         super.update()
-        this.lifespan -= this.lifespanTic
+        
+        const newLifespan = this.lifespan - this.lifespanTic
+        this.lifespan = newLifespan > 0
+            ? this.lifespan - this.lifespanTic
+            : 0
     }
 
     display() {
