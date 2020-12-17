@@ -4,7 +4,7 @@ import Window from './window'
 export default class Director {
 
     setup() {
-        this.scene = getScene('system_spawner')
+        this.scene = getScene('shattering_object')
         const renderer = this.scene.renderer ? this.scene.renderer : P2D
 
         const gameWindow = new Window(500, 500, renderer)

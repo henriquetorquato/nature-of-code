@@ -33,7 +33,7 @@ export default class Particle extends Walker {
     }
 
     get isDead() {
-        return this.lifespan < 0
+        return this.lifespan <= 0
     }
 
 }

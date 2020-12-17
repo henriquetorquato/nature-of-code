@@ -2,8 +2,9 @@ import { Vector } from 'p5'
 
 export class BouncingSquareBorder {
 
-    constructor(size) {
+    constructor(size, bounceFactor = 1) {
         this.size = size
+        this.bounceFactor = -bounceFactor
     }
 
     check(position, velocity) {
@@ -12,12 +13,12 @@ export class BouncingSquareBorder {
 
         if (nextPosition.x < 0 || nextPosition.x + this.size.width > window.canvasWidth)
         {
-            bounce.x = -1
+            bounce.x = this.bounceFactor
         }
 
         if (nextPosition.y < 0 || nextPosition.y + this.size.height > window.canvasHeight)
         {
-            bounce.y = -1
+            bounce.y = this.bounceFactor
         }
 
         return {

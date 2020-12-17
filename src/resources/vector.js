@@ -44,3 +44,13 @@ Vector.normalize = (vector) => {
 
     return vector
 }
+
+Vector.rotateAround = (vector, angle, anchor) => {
+    const cos = Math.cos(angle)
+    const sin = Math.sin(angle)
+
+    const point = Vector.sub(anchor, vector)
+    return createVector(
+        (cos * point.x - sin * point.y) + anchor.x,
+        (sin * point.x + cos * point.y) + anchor.y)
+}
