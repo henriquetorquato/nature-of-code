@@ -40,6 +40,7 @@ import ParticleForce from './chapter_4_particle_systems/particle_force'
 import MovingSystem from './chapter_4_particle_systems/moving_system'
 import SystemSpawner from './chapter_4_particle_systems/system_spawner'
 import ShatteringObject from './chapter_4_particle_systems/shattering_object'
+import ParticleRepeller from './chapter_4_particle_systems/particle_repeller'
 
 const scenes = {
     'ecosystem': Ecosystem,
@@ -78,7 +79,8 @@ const scenes = {
     'particle_force': ParticleForce,
     'moving_system': MovingSystem,
     'system_spawner': SystemSpawner,
-    'shattering_object': ShatteringObject
+    'shattering_object': ShatteringObject,
+    'particle_repeller': ParticleRepeller
 }
 
 const getScene = (key) => {

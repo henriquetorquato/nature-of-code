@@ -25,4 +25,17 @@ export default class ParticleSystem {
         this.particles.push(particle)
     }
 
+    applyForce(force) {
+        this.particles.forEach(particle =>
+            particle.applyForce(force))
+    }
+
+    applyDrag(fluid) {
+        this.particles.forEach(particle =>
+        {
+            const friction = fluid.drag(particle.velocity, particle.area)
+            particle.applyForce(friction)
+        })
+    }
+
 }
