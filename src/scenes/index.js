@@ -63,7 +63,7 @@ const scenes = [
             new Scene('color_noise', 'Color Noise', ColorNoise),
             new Scene('noise_landscape', 'Noise Lanscape', NoiseLanscape),
             new Scene('bouncing_sphere', 'Bouncing Sphere', BouncingSphere),
-            new Scene('car_acceleration', 'Bouncing Sphere', CarAcceleration),
+            new Scene('car_acceleration', 'Car Acceleration', CarAcceleration),
             new Scene('perlin_acceleration', 'Perlin Acceleration', PerlinAcceleration),
             new Scene('gravitational_acceleration', 'Gravitational Acceleration', GravitationalAcceleration)
         ]
