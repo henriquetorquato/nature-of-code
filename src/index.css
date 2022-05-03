@@ -1,10 +1,59 @@
+:root {
+    --primary: #9575cd;
+    --primary-light: #c7a4ff;
+    --primary-dark: #65499c;
+}
+
+@font-face {
+    font-family: GraublauWeb;
+    src: url("./assets/NotCourierSans/NotCourierSans.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GraublauWeb;
+    font-weight: bold;
+    src: url("./assets/NotCourierSans/NotCourierSans-Bold.otf") format("opentype");
+}
+
 body, html {
     margin: 0;
 }
 
-main {
+.container {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    height: 500px; /* Change this to be dynamic */
+}
+
+.side-menu {
+    overflow-y: scroll;
+    font-family: 'GraublauWeb';
+}
+
+.scene-group-component_label {
+    padding: 5px 8px;
+    background-color: var(--primary-dark);
+    font-weight: bold;
+    color: white;
+}
+
+.scene-group-component_list > div {
+    padding: 1px 10px;
+    background-color: var(--primary-light);
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.scene-group-component_list > div.selected {
+    padding: 1px 10px;
+    background-color: var(--primary);
+    opacity: 0.8;
 }

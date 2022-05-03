@@ -2,15 +2,17 @@ import 'p5'
 import './resources'
 import './index.css'
 
-import { Director } from './components'
+import { Director, SideMenu } from './components'
 
 const director = new Director()
+const sideMenu = new SideMenu()
 
 window.preload = () => {
     window.font = loadFont('./src/assets/NotCourierSans/NotCourierSans.otf')
 }
 
 window.setup = () => {
+    sideMenu.setup()
     director.setup()
 }
 

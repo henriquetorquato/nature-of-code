@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -22,6 +23,16 @@ module.exports = {
 				exclude: /(node_modules)/,
 				use: ['style-loader', 'css-loader'],
 			},
+			{
+				test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
+				use: [{
+					loader: 'file-loader',
+					options: {
+						name: '[name].[ext]',
+						outputPath: './fonts/' //dont actually use these fonts but still need to process them
+					}
+				}]
+			}
 		]
 	},
 	resolve: {
@@ -34,6 +45,6 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new HtmlWebpackPlugin({template: './src/index.html'})
+		new HtmlWebpackPlugin({ template: './src/index.html' })
 	]
 };

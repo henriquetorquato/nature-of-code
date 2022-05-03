@@ -1,10 +1,13 @@
-import { getScene } from '@scenes'
 import Window from './window'
+import { getScene } from '@scenes'
+import { getActiveScene } from './active_scene'
 
 export default class Director {
 
     setup() {
-        this.scene = getScene('particle_repeller')
+        const scene_id = getActiveScene()
+
+        this.scene = getScene(scene_id)
         const renderer = this.scene.renderer ? this.scene.renderer : P2D
 
         const gameWindow = new Window(500, 500, renderer)
@@ -24,5 +27,4 @@ export default class Director {
             this.scene.keyPressed()
         }
     }
-
 }

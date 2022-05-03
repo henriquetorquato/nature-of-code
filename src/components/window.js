@@ -1,3 +1,5 @@
+const CANVAS_PARENT = 'canvas-parent'
+
 export default class Window {
 
     constructor(width, height, renderer) {
@@ -19,7 +21,7 @@ export default class Window {
     }
 
     create() {
-        createCanvas(this.width, this.height, this.renderer)
+        const canvas = createCanvas(this.width, this.height, this.renderer)
+        canvas.parent(CANVAS_PARENT)
     }
-
 }
