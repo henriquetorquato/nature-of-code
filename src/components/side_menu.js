@@ -3,6 +3,7 @@ import { scenes } from '@scenes'
 import { getActiveScene } from './active_scene'
 
 const PARENT_ELEMENT_ID = 'side-menu'
+const SELECTED_SCENE_CLASSNAME = 'selected'
 
 export const ON_SCENE_CHANGE_EVENT = 'on-scene-change'
 
@@ -15,6 +16,9 @@ export default class SideMenu {
             const component = this.createSceneGroupComponent(sceneGroup)
             parentElement.appendChild(component)
         }
+
+        const selectedScenes = document.getElementsByClassName(SELECTED_SCENE_CLASSNAME)
+        selectedScenes[0].scrollIntoView(false)
     }
 
     createSceneComponent(scene) {
@@ -56,7 +60,7 @@ export default class SideMenu {
             const sceneElement = this.createSceneComponent(scene)            
 
             if (activeScene === scene.id) {
-                sceneElement.classList.add("selected")
+                sceneElement.classList.add(SELECTED_SCENE_CLASSNAME)
             }
 
             listElement.appendChild(sceneElement)
