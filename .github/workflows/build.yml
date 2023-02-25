@@ -19,6 +19,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: dist-without-markdown
+          name: nature-of-code
           path: dist
           retention-days: 1
