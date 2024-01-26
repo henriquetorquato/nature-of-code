@@ -2,7 +2,8 @@ import Scene from './scene'
 import SceneGroup from './scene_group'
 
 // Main Project
-import Ecosystem from './ecosystem/scene'
+import Ecosystem from './projects/ecosystem/scene'
+import PingPongCrab from './projects/ping_pong_crab'
 
 // Chapter 1: Vectors
 import RandomWalker from './chapter_1_vectors/random_walker'
@@ -51,7 +52,8 @@ const scenes = [
         'projects',
         'Projects',
         [
-            new Scene('ecosystem', 'Ecosystem', Ecosystem)
+            new Scene('ecosystem', 'Ecosystem', Ecosystem),
+            new Scene('ping_pong_crab', 'Ping Pong Crab', PingPongCrab)
         ]
     ),
     new SceneGroup(
