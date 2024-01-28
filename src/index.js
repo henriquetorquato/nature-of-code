@@ -8,7 +8,7 @@ const director = new Director()
 const sideMenu = new SideMenu()
 
 window.preload = () => {
-    window.font = loadFont('./src/assets/NotCourierSans/NotCourierSans.otf')
+    window.font = loadFont('./src/assets/fonts/NotCourierSans/NotCourierSans.otf')
 }
 
 window.setup = () => {

@@ -6,13 +6,13 @@
 
 @font-face {
     font-family: GraublauWeb;
-    src: url("./assets/NotCourierSans/NotCourierSans.otf") format("opentype");
+    src: url("./assets/fonts/NotCourierSans/NotCourierSans.otf") format("opentype");
 }
 
 @font-face {
     font-family: GraublauWeb;
     font-weight: bold;
-    src: url("./assets/NotCourierSans/NotCourierSans-Bold.otf") format("opentype");
+    src: url("./assets/fonts/NotCourierSans/NotCourierSans-Bold.otf") format("opentype");
 }
 
 body, html {
