@@ -54,8 +54,14 @@ const scenes = [
         'Projects',
         [
             new Scene('ecosystem', 'Ecosystem', Ecosystem),
-            new Scene('ping_pong_crab', 'Ping Pong Crab', PingPongCrab),
-            new Scene('fourier_transform_drawing', 'Fourier Transform Drawing', FourierTransformDrawing)
+            new Scene('ping_pong_crab', 'Ping Pong Crab', PingPongCrab)
+        ]
+    ),
+    new SceneGroup(
+        'challenges',
+        'Challenges',
+        [
+            new Scene('fourier_transform_drawing', '#130 - Fourier Transform', FourierTransformDrawing)
         ]
     ),
     new SceneGroup(

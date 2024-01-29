@@ -1,6 +1,5 @@
 import { coffeeMugData } from './data'
 
-const MAX_DATA_SIZE = 100
 const BUFFER_SIZE = 900
 
 export default class FourierTransformDrawing {
@@ -8,22 +7,49 @@ export default class FourierTransformDrawing {
     setup() {
         this.buffer = new Buffer(createVector(0, 0), BUFFER_SIZE)
 
-        const { x, y } = this.getNextDrawing()
-
-        const fourierX = Fourier.discreteTransform(x).map(data => new Epicycle(data)).slice(1, x.length)
-        const fourierY = Fourier.discreteTransform(y).map(data => new Epicycle(data)).slice(1, y.length)
-
-        this.time = 0
-        this.deltaTime = TWO_PI / fourierX.length
-
-        this.epicyclesX = new EpicycleCollection(createVector(250, 60), fourierX)        
-        this.epicyclesY = new EpicycleCollection(createVector(60, 250), fourierY)
+        this.isDrawingEnd = true
+        this.isStrokeEnd = true
     }
 
-    // TODO: Implement global time
     draw() {
         clear()
         background(0)
+
+        if (this.isDrawingEnd) {
+            this.strokeIndex = 0
+            this.strokes = this.getNextDrawing()
+
+            this.isDrawingEnd = false
+            this.isStrokeEnd = true
+        }
+        
+        if (this.isStrokeEnd) {
+            if (this.strokeIndex == this.strokes.length) {
+                this.buffer.clear()
+                this.isDrawingEnd = true
+                return
+            }
+
+            const { x, y } = this.strokes[this.strokeIndex]
+            // console.log(x);
+
+            const fourierX = Fourier.discreteTransform(x).map(data => new Epicycle(data, 0))//.slice(1, x.length)
+            const fourierY = Fourier.discreteTransform(y).map(data => new Epicycle(data, HALF_PI))//.slice(1, y.length)
+
+            // console.log(fourierX);
+
+            this.strokeCount = 0
+            this.strokeLength = fourierX.length
+
+            this.time = 0
+            this.deltaTime = TWO_PI / this.strokeLength
+
+            this.epicyclesX = new EpicycleCollection(createVector(250, 60), fourierX)        
+            this.epicyclesY = new EpicycleCollection(createVector(60, 250), fourierY)
+
+            this.isStrokeEnd = false
+            this.strokeIndex += 1
+        }
 
         this.epicyclesX.update(this.time)
         this.epicyclesX.draw()
@@ -43,21 +69,32 @@ export default class FourierTransformDrawing {
         this.buffer.draw()
 
         this.time += this.deltaTime
+        this.strokeCount += 1
+
+        if (this.strokeCount >= this.strokeLength - 1) {
+            this.isStrokeEnd = true
+        }
     }
 
     getNextDrawing() {
-        const index = Math.randomBetween(0, MAX_DATA_SIZE - 1)
+        const index = Math.randomBetween(0, coffeeMugData.length - 1)
         const quickDrawShape = coffeeMugData[index]
 
-        let x = []
-        let y = []
+        let data = []
 
         for (const stroke of quickDrawShape.drawing) {
-            x.push(...stroke[0])
-            y.push(...stroke[1])
+            let x = []
+            let y = []
+
+            for (let i = 0; i < stroke[0].length; i += 1) {
+                x.push(stroke[0][i])
+                y.push(stroke[1][i])    
+            }
+
+            data.push({ x, y })
         }
 
-        return { x, y }
+        return data
     }
 }
 
@@ -83,6 +120,10 @@ class Buffer {
             const data = this.buffer[i]
             point(this.position.x + data.x, this.position.x + data.y)
         }
+    }
+
+    clear() {
+        this.buffer = []
     }
 }
 
@@ -117,10 +158,11 @@ class EpicycleCollection {
 
 class Epicycle {
 
-    constructor({ frequency, amplitude, phase }) {
+    constructor({ frequency, amplitude, phase }, rotation) {
         this.frequency = frequency
         this.amplitude = amplitude
         this.phase = phase
+        this.rotation = rotation
 
         this.position = createVector(0, 0)
         this.value = createVector(0, 0)
@@ -141,8 +183,8 @@ class Epicycle {
     }
 
     calculateNextValue(time) {
-        const cosTime = cos(this.frequency * time + this.phase + HALF_PI)
-        const sinTime = sin(this.frequency * time + this.phase + HALF_PI)
+        const cosTime = cos(this.frequency * time + this.phase + this.rotation)
+        const sinTime = sin(this.frequency * time + this.phase + this.rotation)
 
         // God forgive me, but this calculation does not work without the 0 there
         const x = (cosTime * this.amplitude) - 0 + this.position.x
@@ -186,5 +228,6 @@ class Fourier {
         }
 
         return fourier
+            .sort((a, b) => b.amplitude - a.amplitude)
     }
 }
