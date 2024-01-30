@@ -4,7 +4,9 @@ import SceneGroup from './scene_group'
 // Main Project
 import Ecosystem from './projects/ecosystem/scene'
 import PingPongCrab from './projects/ping_pong_crab'
-import FourierTransformDrawing from './projects/fourier_transform_drawing'
+
+// Challenges
+import FourierTransformDrawing from './challenges/130_fourier_transform'
 
 // Chapter 1: Vectors
 import RandomWalker from './chapter_1_vectors/random_walker'
@@ -61,7 +63,7 @@ const scenes = [
         'challenges',
         'Challenges',
         [
-            new Scene('fourier_transform_drawing', '#130 - Fourier Transform', FourierTransformDrawing)
+            new Scene('fourier_transform', '#130 - Fourier Transform', FourierTransformDrawing)
         ]
     ),
     new SceneGroup(
