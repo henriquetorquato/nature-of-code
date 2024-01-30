@@ -1,48 +1,56 @@
 import { coffeeMugData } from './data'
-
-const BUFFER_SIZE = 900
+import { DrawingBuffer } from './buffer'
 
 export default class FourierTransformDrawing {
 
     setup() {
-        this.buffer = new Buffer(createVector(0, 0), BUFFER_SIZE)
+        this.drawingBuffer = new DrawingBuffer(createVector(0, 0))
 
         this.isDrawingEnd = true
         this.isStrokeEnd = true
+
+        this.timeoutEnd = undefined
     }
 
     draw() {
         clear()
         background(0)
 
+        if (this.timeoutEnd != undefined) {
+            const now = Date.now()
+            if (now > this.timeoutEnd) {
+                this.timeoutEnd = undefined
+            } else {
+                return
+            }
+        }
+
         if (this.isDrawingEnd) {
             this.strokeIndex = 0
-            this.strokes = this.getNextDrawing()
+            this.drawingData = this.getNextDrawing()
 
             this.isDrawingEnd = false
             this.isStrokeEnd = true
         }
         
         if (this.isStrokeEnd) {
-            if (this.strokeIndex == this.strokes.length) {
-                this.buffer.clear()
+            if (this.strokeIndex == this.drawingData.length) {
+                this.drawingBuffer.clear()
                 this.isDrawingEnd = true
+                this.timeoutEnd = Date.now() + 1000
                 return
             }
 
-            const { x, y } = this.strokes[this.strokeIndex]
-            // console.log(x);
+            const { x, y } = this.drawingData[this.strokeIndex]
 
-            const fourierX = Fourier.discreteTransform(x).map(data => new Epicycle(data, 0))//.slice(1, x.length)
-            const fourierY = Fourier.discreteTransform(y).map(data => new Epicycle(data, HALF_PI))//.slice(1, y.length)
-
-            // console.log(fourierX);
-
-            this.strokeCount = 0
-            this.strokeLength = fourierX.length
+            const fourierX = Fourier.discreteTransform(x).map(data => new Epicycle(data, 0))
+            const fourierY = Fourier.discreteTransform(y).map(data => new Epicycle(data, HALF_PI))
+            const dataLenght = fourierX.length
 
             this.time = 0
-            this.deltaTime = TWO_PI / this.strokeLength
+            this.deltaTime = TWO_PI / dataLenght
+
+            this.drawingBuffer.nextStroke(dataLenght)
 
             this.epicyclesX = new EpicycleCollection(createVector(250, 60), fourierX)        
             this.epicyclesY = new EpicycleCollection(createVector(60, 250), fourierY)
@@ -65,20 +73,23 @@ export default class FourierTransformDrawing {
         line(lastValueX.x, lastValueX.y, data.x, data.y)
         line(lastValueY.x, lastValueY.y, data.x, data.y)
 
-        this.buffer.add(data)
-        this.buffer.draw()
+        this.drawingBuffer.add(data)
+        this.drawingBuffer.draw()
 
         this.time += this.deltaTime
-        this.strokeCount += 1
 
-        if (this.strokeCount >= this.strokeLength - 1) {
+        if (this.time > TWO_PI) {
             this.isStrokeEnd = true
         }
     }
 
     getNextDrawing() {
-        const index = Math.randomBetween(0, coffeeMugData.length - 1)
-        const quickDrawShape = coffeeMugData[index]
+        // TODO: Remove non recognized drawings from dataset
+        let quickDrawShape
+        do {
+            const index = Math.randomBetween(0, coffeeMugData.length - 1)
+            quickDrawShape = coffeeMugData[index]
+        } while(!quickDrawShape.recognized)
 
         let data = []
 
@@ -86,7 +97,7 @@ export default class FourierTransformDrawing {
             let x = []
             let y = []
 
-            for (let i = 0; i < stroke[0].length; i += 1) {
+            for (let i = 0; i < stroke[0].length; i++) {
                 x.push(stroke[0][i])
                 y.push(stroke[1][i])    
             }
@@ -95,35 +106,6 @@ export default class FourierTransformDrawing {
         }
 
         return data
-    }
-}
-
-class Buffer {
-
-    constructor(position, size) {
-        this.size = size
-        this.position = position
-
-        this.buffer = []
-    }
-
-    add(point) {
-        this.buffer.unshift(point)
-
-        if (this.buffer.length > this.size) {
-            this.buffer.pop()
-        }
-    }
-
-    draw() {
-        for (let i = 0; i < this.buffer.length; i++) {
-            const data = this.buffer[i]
-            point(this.position.x + data.x, this.position.x + data.y)
-        }
-    }
-
-    clear() {
-        this.buffer = []
     }
 }
 
