@@ -2,19 +2,12 @@ const DEFAULT_BUFFER_SIZE = 500
 
 class StrokeBuffer {
 
-    constructor(position, size) {
-        this.size = size
-        this.position = position
-
+    constructor() {
         this.buffer = []
     }
 
     add(point) {
-        this.buffer.unshift(point)
-
-        if (this.buffer.length > this.size) {
-            this.buffer.pop()
-        }
+        this.buffer.push(point)
     }
 
     draw() {
@@ -34,8 +27,7 @@ class StrokeBuffer {
 
 class DrawingBuffer {
 
-    constructor(position) {
-        this.position = position
+    constructor() {
         this.clear()
     }
 
@@ -47,7 +39,7 @@ class DrawingBuffer {
 
     nextStroke(size) {
         this.strokeIndex++
-        this.strokes[this.strokeIndex] = new StrokeBuffer(this.position, size)
+        this.strokes[this.strokeIndex] = new StrokeBuffer(size)
     }
 
     add(point) {

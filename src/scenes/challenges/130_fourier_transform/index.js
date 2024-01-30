@@ -1,10 +1,12 @@
 import { coffeeMugData } from './data'
 import { DrawingBuffer } from './buffer'
 
+const DISPLAY_TIMEOUT = 1000
+
 export default class FourierTransformDrawing {
 
     setup() {
-        this.drawingBuffer = new DrawingBuffer(createVector(0, 0))
+        this.drawingBuffer = new DrawingBuffer()
 
         this.isDrawingEnd = true
         this.isStrokeEnd = true
@@ -20,7 +22,9 @@ export default class FourierTransformDrawing {
             const now = Date.now()
             if (now > this.timeoutEnd) {
                 this.timeoutEnd = undefined
+                this.drawingBuffer.clear()
             } else {
+                this.drawingBuffer.draw()
                 return
             }
         }
@@ -35,9 +39,8 @@ export default class FourierTransformDrawing {
         
         if (this.isStrokeEnd) {
             if (this.strokeIndex == this.drawingData.length) {
-                this.drawingBuffer.clear()
                 this.isDrawingEnd = true
-                this.timeoutEnd = Date.now() + 1000
+                this.timeoutEnd = Date.now() + DISPLAY_TIMEOUT
                 return
             }
 
@@ -45,12 +48,12 @@ export default class FourierTransformDrawing {
 
             const fourierX = Fourier.discreteTransform(x).map(data => new Epicycle(data, 0))
             const fourierY = Fourier.discreteTransform(y).map(data => new Epicycle(data, HALF_PI))
-            const dataLenght = fourierX.length
+            const dataLength = fourierX.length
 
             this.time = 0
-            this.deltaTime = TWO_PI / dataLenght
+            this.deltaTime = TWO_PI / dataLength
 
-            this.drawingBuffer.nextStroke(dataLenght)
+            this.drawingBuffer.nextStroke(dataLength)
 
             this.epicyclesX = new EpicycleCollection(createVector(250, 60), fourierX)        
             this.epicyclesY = new EpicycleCollection(createVector(60, 250), fourierY)
@@ -78,18 +81,21 @@ export default class FourierTransformDrawing {
 
         this.time += this.deltaTime
 
-        if (this.time > TWO_PI) {
+        if (this.time >= TWO_PI) {
             this.isStrokeEnd = true
         }
     }
 
     getNextDrawing() {
         // TODO: Remove non recognized drawings from dataset
+        let index = undefined
         let quickDrawShape
         do {
-            const index = Math.randomBetween(0, coffeeMugData.length - 1)
+            index = Math.randomBetween(0, coffeeMugData.length - 1)
             quickDrawShape = coffeeMugData[index]
         } while(!quickDrawShape.recognized)
+
+        console.log(`Drawing internal index #${index}`)
 
         let data = []
 
